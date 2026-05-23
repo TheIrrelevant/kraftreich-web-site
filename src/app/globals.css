@@ -1,0 +1,40 @@
+/**
+ * ---metadata---
+ * @file src/app/globals.css
+ * @description Global stylesheet entry. Tailwind v4 import + design tokens + motion helpers.
+ *              Tokens are the single source of truth; this file only composes them.
+ * @last-updated 2026-05-23
+ * ---end-metadata---
+ */
+
+@import "tailwindcss";
+@import "../shared/styles/tokens.css";
+@import "../shared/styles/motion.css";
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  height: 100%;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}

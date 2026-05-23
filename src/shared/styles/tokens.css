@@ -1,0 +1,106 @@
+/**
+ * ---metadata---
+ * @file src/shared/styles/tokens.css
+ * @description Single source of truth for design tokens. Tailwind v4 reads these via @theme
+ *              and exposes them both as utility classes and as CSS custom properties.
+ *              Five groups: color, typography, spacing, motion, container.
+ * @last-updated 2026-05-23
+ * ---end-metadata---
+ */
+
+@theme {
+  /* ─── Color ────────────────────────────────────────────────────────────
+   * Semantic names. Dark by default. One accent.
+   * Palette: obsidian / bone / ash + warm sand accent.
+   * Adding a second accent requires removing the first. */
+
+  --color-bg: #000000;
+  --color-bg-muted: #0c0c0c;
+  --color-bg-elevated: #141414;
+  --color-fg: #ece8df;
+  --color-fg-muted: #8c8780;
+  --color-fg-faint: #5a5650;
+  --color-accent: #d4a574;
+  --color-border: #1a1a1a;
+
+  /* ─── Typography ──────────────────────────────────────────────────────
+   * One serif (display), one sans (body), one mono (rare).
+   * Adding a third family requires retiring one.
+   * Font files arrive in /public/fonts during P5; stacks ship now. */
+
+  --font-display: "Warbler", "Cormorant Garamond", "EB Garamond", Georgia, ui-serif, serif;
+  --font-body: "Avenir Next", "Avenir", "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, "Courier New", monospace;
+
+  /* Type scale (size / line-height). Four sizes max in active use.
+   * Display uses fluid clamp() for cinematic hero moments. */
+
+  --text-xs: 0.75rem; /* 12 / 16 */
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem; /* 14 / 20 */
+  --text-sm--line-height: 1.25rem;
+  --text-base: 1rem; /* 16 / 24 */
+  --text-base--line-height: 1.5rem;
+  --text-lg: 1.25rem; /* 20 / 28 */
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 2rem; /* 32 / 36 */
+  --text-xl--line-height: 2.25rem;
+  --text-display: clamp(3rem, 8vw, 7.5rem); /* 48 → 120px */
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.02em;
+
+  /* ─── Spacing ──────────────────────────────────────────────────────────
+   * 8-point grid. Tailwind utility classes follow Tailwind's default scale;
+   * these tokens define the canonical values for non-Tailwind contexts
+   * (e.g. R3F positioning, inline style props). */
+
+  --space-1: 0.25rem; /* 4 */
+  --space-2: 0.5rem; /* 8 */
+  --space-3: 0.75rem; /* 12 */
+  --space-4: 1rem; /* 16 */
+  --space-6: 1.5rem; /* 24 */
+  --space-8: 2rem; /* 32 */
+  --space-12: 3rem; /* 48 */
+  --space-16: 4rem; /* 64 */
+  --space-24: 6rem; /* 96 */
+  --space-32: 8rem; /* 128 */
+
+  /* ─── Motion ──────────────────────────────────────────────────────────
+   * Durations + easings. The single source of truth for Framer Motion (DOM)
+   * and Three.js / R3F (Canvas). Variants reference these via var();
+   * R3F easings reference the same numeric tuples. */
+
+  --motion-instant: 80ms;
+  --motion-fast: 160ms;
+  --motion-base: 240ms;
+  --motion-slow: 480ms;
+  --motion-cinematic: 900ms;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ─── Container ───────────────────────────────────────────────────────
+   * Four container widths. Side gutters scale with viewport.
+   * The Container primitive (P5) consumes these. */
+
+  --container-narrow: 40rem; /* 640  — reading width  */
+  --container-base: 64rem; /* 1024 — default content */
+  --container-wide: 80rem; /* 1280 — full layouts    */
+  --container-max: 90rem; /* 1440 — bleed limit     */
+
+  --gutter-sm: 1rem; /* 16 */
+  --gutter-md: 1.5rem; /* 24 */
+  --gutter-lg: 3rem; /* 48 */
+
+  /* ─── Radius (single value, per DESIGN_SYSTEM.md) ─────────────────── */
+  --radius: 0.25rem; /* 4 */
+
+  /* ─── Z-index scale ──────────────────────────────────────────────── */
+  --z-base: 0;
+  --z-canvas: 10;
+  --z-content: 20;
+  --z-nav: 40;
+  --z-overlay: 60;
+  --z-modal: 80;
+}

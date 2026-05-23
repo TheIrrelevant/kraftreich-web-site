@@ -1,0 +1,9 @@
+# ---metadata---
+# file: pnpm-workspace.yaml
+# description: pnpm config — approves postinstall scripts for sharp + unrs-resolver
+# last-updated: 2026-05-23
+# ---end-metadata---
+
+allowBuilds:
+  sharp: true
+  unrs-resolver: true
