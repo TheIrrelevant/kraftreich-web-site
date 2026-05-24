@@ -18,19 +18,19 @@ type Props = {
 export default function WorkDetail({ project }: Props) {
   return (
     <article>
-      <header className="border-b border-[var(--color-border)] pb-[var(--space-8)]">
-        <Text size="xs" tone="faint">
+      <header className="border-b border-[var(--accent)] pb-[var(--space-32)]">
+        <Text size="caption" tone="muted">
           {project.year}
           {project.role ? ` · ${project.role}` : ""}
         </Text>
-        <Heading as="h1" size="display" className="mt-[var(--space-3)]">
+        <Heading as="h1" size="h1" className="mt-[var(--space-16)]">
           {project.title}
         </Heading>
-        <Text size="lg" tone="muted" className="mt-[var(--space-6)]">
+        <Text size="body" tone="muted" className="mt-[var(--space-24)]">
           {project.summary}
         </Text>
       </header>
-      <div className="prose-placeholder py-[var(--space-12)]">
+      <div className="prose-placeholder py-[var(--space-48)]">
         <Text tone="muted">
           Case-study body lands in a later phase as MDX. The route, layout, and routing contract are
           in place now.

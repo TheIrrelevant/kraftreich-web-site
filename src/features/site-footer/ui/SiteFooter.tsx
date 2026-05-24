@@ -13,16 +13,16 @@ import Link from "@/shared/ui/Link";
 export default function SiteFooter() {
   const year = new Date().getFullYear();
   return (
-    <footer className="mt-[var(--space-32)] border-t border-[var(--color-border)]">
+    <footer className="mt-[var(--space-96)] border-t border-[var(--accent)]">
       <Container width="wide">
-        <div className="flex flex-col gap-[var(--space-3)] py-[var(--space-12)] md:flex-row md:items-center md:justify-between">
-          <Text size="sm" tone="faint">
+        <div className="flex flex-col gap-[var(--space-16)] py-[var(--space-48)] md:flex-row md:items-center md:justify-between">
+          <Text size="body-sm" tone="muted">
             © {year} Kraftreich
           </Text>
           <Link
             href="mailto:hello@kraftreich.example"
             tone="muted"
-            className="text-[var(--text-sm)]"
+            className="text-[var(--text-body-sm)]"
           >
             hello@kraftreich.example
           </Link>

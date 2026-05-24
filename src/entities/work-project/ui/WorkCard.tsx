@@ -20,21 +20,21 @@ export default function WorkCard({ project }: Props) {
   return (
     <Link
       href={`/work/${project.slug}`}
-      className="group block border-t border-[var(--color-border)] py-[var(--space-6)]"
+      className="group block border-t border-[var(--accent)] py-[var(--space-24)]"
     >
-      <div className="flex items-baseline justify-between gap-[var(--space-4)]">
-        <Heading as="h3" size="lg">
+      <div className="flex items-baseline justify-between gap-[var(--space-16)]">
+        <Heading as="h3" size="h3">
           {project.title}
         </Heading>
-        <Text as="span" size="sm" tone="faint">
+        <Text as="span" size="body-sm" tone="muted">
           {project.year}
         </Text>
       </div>
-      <Text size="sm" tone="muted" className="mt-[var(--space-2)]">
+      <Text size="body-sm" tone="muted" className="mt-[var(--space-8)]">
         {project.summary}
       </Text>
       {project.role ? (
-        <Text size="xs" tone="faint" className="mt-[var(--space-3)]">
+        <Text size="caption" tone="muted" className="mt-[var(--space-16)]">
           {project.role}
         </Text>
       ) : null}

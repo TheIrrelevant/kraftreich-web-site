@@ -18,10 +18,10 @@ export default function WorkPage() {
   return (
     <Section>
       <Container width="base">
-        <Heading as="h1" size="xl">
+        <Heading as="h1" size="h2">
           Work
         </Heading>
-        <div className="mt-[var(--space-12)]">
+        <div className="mt-[var(--space-48)]">
           <WorkGrid />
         </div>
       </Container>

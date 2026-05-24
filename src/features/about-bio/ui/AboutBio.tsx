@@ -12,10 +12,10 @@ import Text from "@/shared/ui/Text";
 export default function AboutBio() {
   return (
     <article>
-      <Heading as="h1" size="xl">
+      <Heading as="h1" size="h2">
         About
       </Heading>
-      <div className="mt-[var(--space-8)] space-y-[var(--space-4)]">
+      <div className="mt-[var(--space-32)] space-y-[var(--space-16)]">
         <Text tone="default">
           Kraftreich is a studio working at the edge between document and atmosphere.
         </Text>

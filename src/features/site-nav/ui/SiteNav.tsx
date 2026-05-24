@@ -10,23 +10,27 @@ import Container from "@/shared/ui/Container";
 import Link from "@/shared/ui/Link";
 
 const items = [
-  { href: "/work", label: "Work" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/work", label: "Gallery" },
+  { href: "/about", label: "Who I am?" },
+  { href: "/contact", label: "Get Touch" },
 ];
 
 export default function SiteNav() {
   return (
-    <header className="sticky top-0 z-[var(--z-nav)] border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur">
+    <header className="fixed inset-x-0 top-0 z-[var(--z-nav)] bg-transparent">
       <Container width="wide">
-        <nav className="flex items-center justify-between py-[var(--space-4)]">
-          <Link href="/" tone="default" className="text-[var(--text-base)] tracking-tight">
+        <nav className="flex items-center justify-between py-[var(--space-16)]">
+          <Link
+            href="/"
+            tone="default"
+            className="font-display text-[var(--text-h3)] tracking-tight"
+          >
             Kraftreich
           </Link>
-          <ul className="flex items-center gap-[var(--space-6)]">
+          <ul className="flex items-center gap-[var(--space-24)]">
             {items.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} tone="muted" className="text-[var(--text-sm)]">
+                <Link href={item.href} tone="muted" className="text-[var(--text-body-sm)]">
                   {item.label}
                 </Link>
               </li>

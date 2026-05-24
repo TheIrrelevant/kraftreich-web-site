@@ -11,6 +11,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import SiteNav from "@/features/site-nav/ui/SiteNav";
 import SiteFooter from "@/features/site-footer/ui/SiteFooter";
+import { avenir, warbler } from "@/shared/lib/fonts";
 
 export const metadata: Metadata = {
   title: "Kraftreich",
@@ -24,7 +25,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${avenir.variable} ${warbler.variable}`}>
       <body className="min-h-screen flex flex-col">
         <SiteNav />
         <main className="flex-1">{children}</main>

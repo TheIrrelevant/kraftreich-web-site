@@ -13,10 +13,10 @@ import { cn } from "@/shared/lib/cn";
 type Rhythm = "tight" | "base" | "loose" | "cinematic";
 
 const rhythmClass: Record<Rhythm, string> = {
-  tight: "py-[var(--space-8)]",
-  base: "py-[var(--space-16)]",
-  loose: "py-[var(--space-24)]",
-  cinematic: "py-[var(--space-32)]",
+  tight: "py-[var(--space-32)]",
+  base: "py-[var(--space-48)]",
+  loose: "py-[var(--space-64)]",
+  cinematic: "py-[var(--space-96)]",
 };
 
 type Props = HTMLAttributes<HTMLElement> & {

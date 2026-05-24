@@ -5,12 +5,39 @@ scope: repo
 description: Human-readable log of meaningful changes. Updated with every commit.
 last-updated: 2026-05-24
 last-model: amelia(claude-opus-4-7)
-last-change: post-Phase-7 debt cleanup (eslint flat-native, MDX loader, contact decision, pnpm config)
+last-change: brand alignment — tokens, fonts, primitives, video-driven particle hero
 ---
 
 # Changelog
 
 All meaningful changes to the Kraftreich Web Site, newest first. Format follows Keep-a-Changelog conventions; versioning is calendar-style until the first production tag.
+
+## [Unreleased] — 2026-05-24 (evening)
+
+### Added
+- **Brand assets.** Avenir (5 weights) and WarblerDeck (Regular/Italic/Bold/BoldItalic) under `public/assets/fonts/`; light/dark monogram logos under `public/assets/logo/`; Rosalia Berghain MP4 under `public/assets/video/` (silent source for the particle hero).
+- **Local font registration.** `src/shared/lib/fonts.ts` wires both families via `next/font/local` exposing `--font-avenir` and `--font-warbler`; layout applies the variable classNames to `<html>`. Tokens lead their stacks with these vars.
+- **Audio-particle hero.** `src/features/audio-particle-cloud/` — a video-driven particle screen replacing the prior visible video hero. Hidden `<video>` feeds both `THREE.VideoTexture` (for shader sampling) and Web Audio's `MediaElementSource` (for analyser-driven pulse + gain-based mute). 60k bone-white particles random-scatter across a 16:9 plane; per-particle random thresholds against the video's blurred luma drive density modulation (film-grain look). Mouse repulsion + spring return. Mute button bottom-right uses a `GainNode` so the analyser keeps reading data when silenced.
+- **HomeHero.** `src/features/home-hero/` — full-viewport composition that mounts the particle cloud over the primary canvas.
+
+### Changed
+- **Design tokens aligned to BRAND-GUIDELINE.md §IV/V/X.**
+  - Color: brand-identity (`--primary` Obsidian Black `#040205`, `--secondary` Bone White `#f9feff`, `--accent` Ash Silver `#e2e7e9`) + the Matte semantic palette (`--background` Forge Smoke, `--foreground` Iron Slate, `--border` Gunmetal, `--success` Verdant Iron, `--info` Cobalt Dusk, `--warning` Molten Amber, `--error` Burnt Crimson). All legacy `--color-bg / -fg / -accent / -border / -muted / -faint` tokens removed across 11 callsites.
+  - Typography: scale renamed to brand roles (`--text-h1` 48–64 clamp, `--text-h2` 32–40, `--text-h3` 24–28, `--text-body` 16, `--text-body-sm` 14, `--text-caption` 12) with brand-spec line-heights.
+  - Spacing: 8-point grid renamed by px value (`--space-8` … `--space-96`). Existing `--space-N` index references migrated; 12 → 16, 128 → 96 (cap).
+  - Radius: `--radius-sm` 4, `--radius-md` 8, `--radius-lg` 12.
+- **Primitives aligned to brand.** `Heading` size keys `h1/h2/h3` (Warbler Bold); `Text` size keys `caption/body-sm/body` with brand-spec weights, `faint` tone dropped; `Button` adds Avenir Medium + brand padding `24/16`; `Link` `accent` tone uses Cobalt Dusk; `Section` rhythm steps differentiated (32/48/64/96). All consumer callsites updated.
+- **SiteNav.** Warbler-display "Kraftreich" wordmark linking home; labels updated (Work → Gallery, About → Who I am?, Contact → Get Touch). Switched from `sticky` + primary-tinted bg to `fixed inset-x-0 top-0 bg-transparent`; bottom border removed.
+- **BRAND-GUIDELINE.md.** Obsidian Black hex updated `#222121` → `#040205` across §IV Primary Colors, Color Rules, and §X UI Defaults (master-approved hue darkening).
+
+### Fixed
+- **Tailwind v4 font utility ambiguity.** `font-[var(--font-display)]` was being interpreted as `font-weight`, never `font-family`. Switched all primitives + nav to the theme-generated `font-display` / `font-body` utility classes that Tailwind v4 auto-generates from the `@theme` block, restoring Warbler/Avenir rendering.
+- **AudioContext autoplay handshake.** First `tryStart()` could create the graph successfully but fail `audio.play()` (no user gesture). The early `if (ctx) return` then blocked retries. Split into `ensureGraph()` (once) + `tryStart()` (idempotent retry on every user gesture). Video element starts `muted=true` to satisfy autoplay; the listener flips it to `false` on first gesture so `MediaElementSource` actually carries a signal (Chrome silences a muted element through its source node). Default `GainNode` value is `0.3` (30%).
+- **Next.js dev-tools indicator.** `devIndicators: false` in `next.config.mjs` hides the floating route/turbopack badge in dev.
+
+### Removed
+- Hero `hardtechno-16-9.mp4` background video and the separate Rosalia Berghain MP3 (audio is now sourced from the video element itself).
+- Stray `eslint.config 2.mjs` Finder-copy duplicate at repo root.
 
 ## [Unreleased] — 2026-05-24
 

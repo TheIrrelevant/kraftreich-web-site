@@ -15,14 +15,14 @@ type Variant = "primary" | "ghost";
 type Size = "sm" | "base";
 
 const variantClass: Record<Variant, string> = {
-  primary: "bg-[var(--color-fg)] text-[var(--color-bg)] hover:bg-[var(--color-accent)]",
+  primary: "bg-[var(--secondary)] text-[var(--primary)] hover:bg-[var(--accent)]",
   ghost:
-    "bg-transparent text-[var(--color-fg)] border border-[var(--color-border)] hover:border-[var(--color-fg-muted)]",
+    "bg-transparent text-[var(--secondary)] border border-[var(--accent)] hover:border-[var(--secondary)]",
 };
 
 const sizeClass: Record<Size, string> = {
-  sm: "px-[var(--space-3)] py-[var(--space-2)] text-[var(--text-sm)]",
-  base: "px-[var(--space-4)] py-[var(--space-3)] text-[var(--text-base)]",
+  sm: "px-[var(--space-24)] py-[var(--space-8)] text-[var(--text-body-sm)]",
+  base: "px-[var(--space-24)] py-[var(--space-16)] text-[var(--text-body)]",
 };
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -43,7 +43,7 @@ export default function Button({
     <button
       type={type}
       className={cn(
-        "inline-flex items-center justify-center gap-[var(--space-2)] rounded-[var(--radius)] font-[var(--font-body)] disabled:opacity-50 disabled:pointer-events-none",
+        "inline-flex items-center justify-center gap-[var(--space-8)] rounded-[var(--radius-md)] font-body font-medium disabled:opacity-50 disabled:pointer-events-none",
         variantClass[variant],
         sizeClass[size],
         className,

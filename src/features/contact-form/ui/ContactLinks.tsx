@@ -19,19 +19,19 @@ const channels = [
 export default function ContactLinks() {
   return (
     <article>
-      <Heading as="h1" size="xl">
+      <Heading as="h1" size="h2">
         Contact
       </Heading>
-      <Text tone="muted" className="mt-[var(--space-6)]">
+      <Text tone="muted" className="mt-[var(--space-24)]">
         Direct channels.
       </Text>
-      <ul className="mt-[var(--space-12)] flex flex-col gap-[var(--space-4)]">
+      <ul className="mt-[var(--space-48)] flex flex-col gap-[var(--space-16)]">
         {channels.map((c) => (
           <li
             key={c.label}
-            className="flex items-baseline justify-between border-t border-[var(--color-border)] pt-[var(--space-4)]"
+            className="flex items-baseline justify-between border-t border-[var(--accent)] pt-[var(--space-16)]"
           >
-            <Text as="span" size="sm" tone="faint">
+            <Text as="span" size="body-sm" tone="muted">
               {c.label}
             </Text>
             <Link href={c.href} tone="default">

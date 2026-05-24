@@ -1,9 +1,11 @@
 /**
  * ---metadata---
  * @file src/shared/ui/Heading.tsx
- * @description Display type at a token size. Polymorphic via `as` (h1–h6).
- *              Semantic level (`as`) is decoupled from visual size (`size`) — pick both.
- * @last-updated 2026-05-23
+ * @description Display type at a brand size. Polymorphic via `as` (h1–h6).
+ *              Visual size (`size`) is decoupled from semantic level (`as`).
+ *              Sizes follow BRAND-GUIDELINE.md §V Type Scale. Warbler Bold throughout
+ *              (h3 brand allows Bold or Regular — Bold here for visual authority).
+ * @last-updated 2026-05-24
  * ---end-metadata---
  */
 
@@ -11,13 +13,12 @@ import type { ReactNode, HTMLAttributes } from "react";
 import { cn } from "@/shared/lib/cn";
 
 type Level = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-type Size = "lg" | "xl" | "display";
+type Size = "h1" | "h2" | "h3";
 
 const sizeClass: Record<Size, string> = {
-  lg: "text-[var(--text-lg)] leading-[var(--text-lg--line-height)]",
-  xl: "text-[var(--text-xl)] leading-[var(--text-xl--line-height)]",
-  display:
-    "text-[var(--text-display)] leading-[var(--text-display--line-height)] tracking-[var(--text-display--letter-spacing)]",
+  h1: "text-[var(--text-h1)] leading-[var(--text-h1--line-height)] tracking-[var(--text-h1--letter-spacing)]",
+  h2: "text-[var(--text-h2)] leading-[var(--text-h2--line-height)]",
+  h3: "text-[var(--text-h3)] leading-[var(--text-h3--line-height)]",
 };
 
 type Props = HTMLAttributes<HTMLHeadingElement> & {
@@ -28,18 +29,14 @@ type Props = HTMLAttributes<HTMLHeadingElement> & {
 
 export default function Heading({
   as: Tag = "h2",
-  size = "xl",
+  size = "h2",
   className,
   children,
   ...rest
 }: Props) {
   return (
     <Tag
-      className={cn(
-        "font-[var(--font-display)] text-[var(--color-fg)]",
-        sizeClass[size],
-        className,
-      )}
+      className={cn("font-display font-bold text-[var(--secondary)]", sizeClass[size], className)}
       {...rest}
     >
       {children}

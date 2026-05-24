@@ -1,29 +1,30 @@
 /**
  * ---metadata---
  * @file src/shared/ui/Text.tsx
- * @description Body copy at a token size. Polymorphic via `as`. Defaults to <p>.
- * @last-updated 2026-05-23
+ * @description Body copy at a brand size. Polymorphic via `as`. Defaults to <p>.
+ *              Sizes follow BRAND-GUIDELINE.md §V Type Scale. Weights match brand:
+ *              body / body-sm = Regular (400), caption = Light (300).
+ *              For headline-scale type, use Heading.
+ * @last-updated 2026-05-24
  * ---end-metadata---
  */
 
 import { createElement, type ReactNode, type HTMLAttributes } from "react";
 import { cn } from "@/shared/lib/cn";
 
-type Size = "xs" | "sm" | "base" | "lg";
-type Tone = "default" | "muted" | "faint";
+type Size = "caption" | "body-sm" | "body";
+type Tone = "default" | "muted";
 type As = "p" | "span" | "li" | "dd" | "dt" | "blockquote";
 
 const sizeClass: Record<Size, string> = {
-  xs: "text-[var(--text-xs)] leading-[var(--text-xs--line-height)]",
-  sm: "text-[var(--text-sm)] leading-[var(--text-sm--line-height)]",
-  base: "text-[var(--text-base)] leading-[var(--text-base--line-height)]",
-  lg: "text-[var(--text-lg)] leading-[var(--text-lg--line-height)]",
+  caption: "text-[var(--text-caption)] leading-[var(--text-caption--line-height)] font-light",
+  "body-sm": "text-[var(--text-body-sm)] leading-[var(--text-body-sm--line-height)] font-normal",
+  body: "text-[var(--text-body)] leading-[var(--text-body--line-height)] font-normal",
 };
 
 const toneClass: Record<Tone, string> = {
-  default: "text-[var(--color-fg)]",
-  muted: "text-[var(--color-fg-muted)]",
-  faint: "text-[var(--color-fg-faint)]",
+  default: "text-[var(--secondary)]",
+  muted: "text-[var(--accent)]",
 };
 
 type Props = HTMLAttributes<HTMLElement> & {
@@ -35,7 +36,7 @@ type Props = HTMLAttributes<HTMLElement> & {
 
 export default function Text({
   as = "p",
-  size = "base",
+  size = "body",
   tone = "default",
   className,
   children,
@@ -44,7 +45,7 @@ export default function Text({
   return createElement(
     as,
     {
-      className: cn("font-[var(--font-body)]", sizeClass[size], toneClass[tone], className),
+      className: cn("font-body", sizeClass[size], toneClass[tone], className),
       ...rest,
     },
     children,

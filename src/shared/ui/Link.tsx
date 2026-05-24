@@ -14,9 +14,9 @@ import { cn } from "@/shared/lib/cn";
 type Tone = "default" | "muted" | "accent";
 
 const toneClass: Record<Tone, string> = {
-  default: "text-[var(--color-fg)] hover:text-[var(--color-accent)]",
-  muted: "text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]",
-  accent: "text-[var(--color-accent)] hover:opacity-80",
+  default: "text-[var(--secondary)] hover:text-[var(--accent)]",
+  muted: "text-[var(--accent)] hover:text-[var(--secondary)]",
+  accent: "text-[var(--info)] hover:opacity-80",
 };
 
 type Props = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
@@ -29,7 +29,7 @@ const isExternal = (href: string) => /^(https?:|mailto:|tel:)/.test(href);
 
 export default function Link({ href, tone = "default", className, children, ...rest }: Props) {
   const classes = cn(
-    "underline-offset-4 decoration-[var(--color-fg-faint)] hover:underline",
+    "underline-offset-4 decoration-[var(--accent)] hover:underline",
     toneClass[tone],
     className,
   );

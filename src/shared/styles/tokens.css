@@ -10,60 +10,75 @@
 
 @theme {
   /* ─── Color ────────────────────────────────────────────────────────────
-   * Semantic names. Dark by default. One accent.
-   * Palette: obsidian / bone / ash + warm sand accent.
-   * Adding a second accent requires removing the first. */
+   * Brand identity (BRAND-GUIDELINE.md §IV Primary/Secondary):
+   *   --primary    Obsidian Black — default canvas, dark UI surfaces
+   *   --secondary  Bone White     — foreground, text on dark, highlights
+   *   --accent     Ash Silver     — borders, dividers, secondary surfaces, muted text
+   *
+   * Design system semantic (BRAND-GUIDELINE.md §IV Matte) — used by UI components.
+   * Roles are brand-defined; values are 1:1 from the Matte palette. */
 
-  --color-bg: #000000;
-  --color-bg-muted: #0c0c0c;
-  --color-bg-elevated: #141414;
-  --color-fg: #ece8df;
-  --color-fg-muted: #8c8780;
-  --color-fg-faint: #5a5650;
-  --color-accent: #d4a574;
-  --color-border: #1a1a1a;
+  --primary: #040205; /* Obsidian Black */
+  --secondary: #f9feff; /* Bone White */
+  --accent: #e2e7e9; /* Ash Silver */
+
+  --background: #a5a5a8; /* Forge Smoke   — background surfaces, neutral base */
+  --foreground: #3b4248; /* Iron Slate    — body text, primary readable */
+  --border: #7b7b7c; /* Gunmetal      — borders, input outlines */
+  --success: #48a14d; /* Verdant Iron */
+  --info: #6577b3; /* Cobalt Dusk   — info / link */
+  --warning: #ed944d; /* Molten Amber */
+  --error: #b33f40; /* Burnt Crimson */
 
   /* ─── Typography ──────────────────────────────────────────────────────
-   * One serif (display), one sans (body), one mono (rare).
-   * Adding a third family requires retiring one.
-   * Font files arrive in /public/fonts during P5; stacks ship now. */
+   * Brand fonts (BRAND-GUIDELINE.md §V):
+   *   --font-display  Warbler (loaded as Deck) — headlines, hero, editorial
+   *   --font-body     Avenir — body, UI, buttons, labels, navigation
+   * Fallback stacks behind the local variables. */
 
-  --font-display: "Warbler", "Cormorant Garamond", "EB Garamond", Georgia, ui-serif, serif;
-  --font-body: "Avenir Next", "Avenir", "Inter", system-ui, -apple-system, sans-serif;
+  --font-display:
+    var(--font-warbler), "Cormorant Garamond", "EB Garamond", Georgia, ui-serif, serif;
+  --font-body: var(--font-avenir), "Avenir Next", "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, "Courier New", monospace;
 
-  /* Type scale (size / line-height). Four sizes max in active use.
-   * Display uses fluid clamp() for cinematic hero moments. */
+  /* Type scale (BRAND-GUIDELINE.md §V Type Scale).
+   * Display sizes use clamp() across the brand-specified ranges; body sizes are fixed. */
 
-  --text-xs: 0.75rem; /* 12 / 16 */
-  --text-xs--line-height: 1rem;
-  --text-sm: 0.875rem; /* 14 / 20 */
-  --text-sm--line-height: 1.25rem;
-  --text-base: 1rem; /* 16 / 24 */
-  --text-base--line-height: 1.5rem;
-  --text-lg: 1.25rem; /* 20 / 28 */
-  --text-lg--line-height: 1.75rem;
-  --text-xl: 2rem; /* 32 / 36 */
-  --text-xl--line-height: 2.25rem;
-  --text-display: clamp(3rem, 8vw, 7.5rem); /* 48 → 120px */
-  --text-display--line-height: 1;
-  --text-display--letter-spacing: -0.02em;
+  --text-h1: clamp(3rem, 6vw, 4rem); /* 48 → 64 — Warbler Bold */
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.02em;
+
+  --text-h2: clamp(2rem, 4vw, 2.5rem); /* 32 → 40 — Warbler Bold */
+  --text-h2--line-height: 1.15;
+
+  --text-h3: clamp(1.5rem, 2vw, 1.75rem); /* 24 → 28 — Warbler Medium */
+  --text-h3--line-height: 1.2;
+
+  --text-body: 1rem; /* 16 — Avenir Regular */
+  --text-body--line-height: 1.5;
+
+  --text-body-sm: 0.875rem; /* 14 — Avenir Regular */
+  --text-body-sm--line-height: 1.5;
+
+  --text-caption: 0.75rem; /* 12 — Avenir Light */
+  --text-caption--line-height: 1.4;
 
   /* ─── Spacing ──────────────────────────────────────────────────────────
-   * 8-point grid. Tailwind utility classes follow Tailwind's default scale;
-   * these tokens define the canonical values for non-Tailwind contexts
-   * (e.g. R3F positioning, inline style props). */
+   * 8-point grid (BRAND-GUIDELINE.md §X Spacing unit: 8px).
+   * Values name themselves by px: --space-8 = 8px, --space-96 = 96px. */
 
-  --space-1: 0.25rem; /* 4 */
-  --space-2: 0.5rem; /* 8 */
-  --space-3: 0.75rem; /* 12 */
-  --space-4: 1rem; /* 16 */
-  --space-6: 1.5rem; /* 24 */
-  --space-8: 2rem; /* 32 */
-  --space-12: 3rem; /* 48 */
-  --space-16: 4rem; /* 64 */
-  --space-24: 6rem; /* 96 */
-  --space-32: 8rem; /* 128 */
+  --space-8: 0.5rem; /* 8  */
+  --space-16: 1rem; /* 16 */
+  --space-24: 1.5rem; /* 24 */
+  --space-32: 2rem; /* 32 */
+  --space-40: 2.5rem; /* 40 */
+  --space-48: 3rem; /* 48 */
+  --space-56: 3.5rem; /* 56 */
+  --space-64: 4rem; /* 64 */
+  --space-72: 4.5rem; /* 72 */
+  --space-80: 5rem; /* 80 */
+  --space-88: 5.5rem; /* 88 */
+  --space-96: 6rem; /* 96 */
 
   /* ─── Motion ──────────────────────────────────────────────────────────
    * Durations + easings. The single source of truth for Framer Motion (DOM)
@@ -93,8 +108,10 @@
   --gutter-md: 1.5rem; /* 24 */
   --gutter-lg: 3rem; /* 48 */
 
-  /* ─── Radius (single value, per DESIGN_SYSTEM.md) ─────────────────── */
-  --radius: 0.25rem; /* 4 */
+  /* ─── Radius (BRAND-GUIDELINE.md §X) ──────────────────────────────── */
+  --radius-sm: 0.25rem; /* 4  — small controls */
+  --radius-md: 0.5rem; /* 8  — default */
+  --radius-lg: 0.75rem; /* 12 — cards */
 
   /* ─── Z-index scale ──────────────────────────────────────────────── */
   --z-base: 0;
