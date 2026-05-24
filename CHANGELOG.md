@@ -5,12 +5,28 @@ scope: repo
 description: Human-readable log of meaningful changes. Updated with every commit.
 last-updated: 2026-05-24
 last-model: amelia(claude-opus-4-7)
-last-change: identity strip + scroll-morph hero + headset mute toggle
+last-change: work grid + audio-mute provider + footer removal
 ---
 
 # Changelog
 
 All meaningful changes to the Kraftreich Web Site, newest first. Format follows Keep-a-Changelog conventions; versioning is calendar-style until the first production tag.
+
+## [Unreleased] — 2026-05-24 (night)
+
+### Added
+- **`work-grid` feature.** `src/features/work-grid/` — 5-row × 3-column grid (15 cells: About Me + gallery-01..14). Each cell renders a title, a 16:10 placeholder cover, and a 2-sentence description slot. Opacity is driven by a monotonic motion-value tied to `scrollY` (0..600px) so the grid fades in alongside the particle morph and never fades back out once revealed.
+- **Audio-mute context provider.** `src/shared/lib/audio-mute/` — small client-side React context holding `muted`, `hasActivated`, `toggleMute`, `registerActivation`, and `registerOutputGain`. Lives in `shared/` so two features in different vertical slices (`audio-particle-cloud` owning the graph, `identity-strip` hosting the headset toggle) can share state without breaching the cross-feature import rule. Mute is applied to the `GainNode` synchronously inside the React state updater — a previous reactive `useEffect[muted]` mirror lost mute changes in a race and was replaced.
+- **Idle-gap collapse.** `HomeHero` shrinks the pre-grid spacer from 50vh to 0vh via a motion value tied to the morph progress. After the first scroll past the morph threshold, the gap stays collapsed for the page lifetime so a scroll-back-to-top reveals the locked sphere with the grid seated directly under the IdentityStrip.
+
+### Changed
+- **Monotonic morph + grid ratchet.** Both `morphRef` (read inside R3F's `useFrame`) and the grid opacity motion value are now write-only-increasing: once a higher progress value is reached, scrolling back never reverts the sphere into the scatter or fades the grid back to invisible. Page refresh resets the ratchet via `history.scrollRestoration = "manual"` + `scrollTo(0, 0)` on `HomeHero` mount so users always start with the idle scatter.
+- **Z-axis re-stack.** Particle canvas section moved from `z-0` to `z-30` so the sphere reads as a top-most vinyl-style bleed over the IdentityStrip (now `z-20` with `bg-[var(--primary)]`) and the WorkGrid (`z-10`). The particle canvas carries `pointer-events: none` and an explicit `style={{ pointerEvents: "none" }}` on the R3F Canvas itself — R3F's default events layer otherwise installs pointer listeners on the canvas DOM that override the parent's pointer-events:none and intercept clicks meant for the headset toggle.
+- **Headset toggle restructure.** `AudioMuteToggle` is now a plain inline button (no portal, no `position: fixed`, no AnimatePresence) consumed via the `useAudioMute` hook. It slots into the IdentityStrip's left column under "Ugur Ozkan" through a new `audioSlot?: ReactNode` prop on `IdentityStrip`. Always visible — slashed pre-activation, clean once audio is playing. An activation-window guard (250 ms) prevents the activation click from immediately re-muting the audio it just started.
+- **Layout.** `src/app/layout.tsx` no longer renders any chrome — both nav and footer are gone. The IdentityStrip carries identity + wayfinding inline.
+
+### Removed
+- **`site-footer` feature.** `src/features/site-footer/` and its layout mount removed; copyright + email line lived there with no remaining purpose for the current single-page composition.
 
 ## [Unreleased] — 2026-05-24 (late evening)
 

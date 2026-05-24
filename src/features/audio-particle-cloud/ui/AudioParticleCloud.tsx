@@ -5,9 +5,10 @@
  *              particle video plane with stable UVs, so the source video reads cleanly. `morphRef`
  *              (0→1) lerps each particle's world position from that plane into a tight Fibonacci
  *              sphere anchored to the left viewport edge. A Web Audio analyser reads the video
- *              track after user interaction and keeps the formed sphere pulsing to the music. A
- *              headset toggle reveals once the sphere is formed (post-scroll) and mutes via the
- *              output GainNode so the analyser keeps reacting visually.
+ *              track after user interaction and keeps the formed sphere pulsing to the music.
+ *              Mute state lives in `useAudioMute` so the headset toggle can render inside the
+ *              IdentityStrip; this component subscribes to the same context to drive the output
+ *              GainNode and to register the first user activation.
  * @last-updated 2026-05-24
  * ---end-metadata---
  */
@@ -15,9 +16,9 @@
 "use client";
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
-import AudioMuteToggle from "@/features/audio-particle-cloud/ui/AudioMuteToggle";
+import { useAudioMute } from "@/shared/lib/audio-mute/audio-mute-context";
 
 const PARTICLE_COUNT = 60000;
 
@@ -28,10 +29,6 @@ const BONE_WHITE = new THREE.Color("#f9feff");
 const SPHERE_RADIUS_RATIO = 0.06;
 const SPHERE_CENTER_Y_RATIO = 0.2;
 const AUDIO_OUTPUT_GAIN = 0.3;
-
-// Scroll distance (px) past which the mute toggle becomes visible — matches the morph distance
-// used by HomeHero so the toggle reveals as the particles finish compacting into the sphere.
-const TOGGLE_REVEAL_SCROLL_PX = 600;
 
 type AudioGraph = {
   analyser: AnalyserNode;
@@ -392,30 +389,15 @@ export default function AudioParticleCloud({ morphRef }: { morphRef: { current: 
   // "use client" still renders on the server. Once set, element identity is stable.
   const [videoEl, setVideoEl] = useState<HTMLVideoElement | null>(null);
   const audioGraphRef = useRef<AudioGraph | null>(null);
-  const [muted, setMuted] = useState(false);
-  const [hasActivated, setHasActivated] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
+  const { registerActivation, registerOutputGain } = useAudioMute();
+  // Keep the latest callbacks behind refs so the audio-setup effect can stay []-deps (we never
+  // want to tear down and recreate the graph just because a callback identity changes).
+  const registerActivationRef = useRef(registerActivation);
+  const registerOutputGainRef = useRef(registerOutputGain);
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY >= TOGGLE_REVEAL_SCROLL_PX);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const handleToggleMute = useCallback(() => {
-    const graph = audioGraphRef.current;
-    if (!graph) return;
-    setMuted((prev) => {
-      const next = !prev;
-      // Mute via GainNode, never element.muted — flipping element.muted would silence the analyser
-      // signal too (Chrome behaviour), freezing visual reactivity.
-      graph.outputGain.gain.value = next ? 0 : AUDIO_OUTPUT_GAIN;
-      return next;
-    });
-  }, []);
+    registerActivationRef.current = registerActivation;
+    registerOutputGainRef.current = registerOutputGain;
+  }, [registerActivation, registerOutputGain]);
 
   useEffect(() => {
     const v = document.createElement("video");
@@ -483,6 +465,7 @@ export default function AudioParticleCloud({ morphRef }: { morphRef: { current: 
         timeData: new Uint8Array(new ArrayBuffer(analyser.fftSize)),
       };
       cleanupAudio = () => {
+        registerOutputGainRef.current(null);
         source.disconnect();
         analyser.disconnect();
         outputGain.disconnect();
@@ -491,11 +474,14 @@ export default function AudioParticleCloud({ morphRef }: { morphRef: { current: 
         audioMedia.src = "";
         audioGraphRef.current = null;
       };
+      // Hand the output GainNode to the context so toggleMute / registerActivation can drive
+      // it synchronously. The context will also align the gain with the current muted state.
+      registerOutputGainRef.current(outputGain);
       safeResume(context);
       audioMedia.muted = false;
       audioMedia.currentTime = v.currentTime;
       safePlayAudio();
-      setHasActivated(true);
+      registerActivationRef.current();
     };
     const interactionEvents = ["pointerdown", "keydown", "touchstart"];
     interactionEvents.forEach((eventName) => {
@@ -521,16 +507,16 @@ export default function AudioParticleCloud({ morphRef }: { morphRef: { current: 
         camera={{ position: [0, 0, 9], fov: 50 }}
         gl={{ antialias: true, alpha: true }}
         dpr={[1, 2]}
+        // R3F's default events layer installs pointer listeners on the canvas DOM and the canvas
+        // element overrides the parent's pointer-events:none — that ate the headset button click
+        // (window pointerdown still bubbled, so activation worked, but onClick never fired).
+        // Hard-set pointer-events:none on the canvas itself so clicks fall through to the strip.
+        style={{ pointerEvents: "none" }}
       >
         {videoEl ? (
           <VideoParticles videoEl={videoEl} morphRef={morphRef} audioGraphRef={audioGraphRef} />
         ) : null}
       </Canvas>
-      <AudioMuteToggle
-        muted={muted}
-        visible={hasActivated && scrolled}
-        onToggle={handleToggleMute}
-      />
     </div>
   );
 }

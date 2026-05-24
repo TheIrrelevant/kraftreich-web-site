@@ -3,20 +3,24 @@
  * @file src/features/identity-strip/ui/IdentityStrip.tsx
  * @description Identity strip rendered directly below the hero. Three columns: name + email,
  *              role + location, and the gallery index table. Monospace, terminal-density,
- *              archive-feel. Server Component — no interactivity.
+ *              archive-feel. Server Component — accepts an optional `audioSlot` so the audio
+ *              mute toggle can live structurally inside the strip without breaching the
+ *              cross-feature import rule (page.tsx composes the slot).
  * @last-updated 2026-05-24
  * ---end-metadata---
  */
 
+import { type ReactNode } from "react";
 import { GALLERY_INDEX } from "@/features/identity-strip/model/gallery-index";
 
-export default function IdentityStrip() {
+export default function IdentityStrip({ audioSlot }: { audioSlot?: ReactNode }) {
   return (
-    <section className="sticky top-0 z-50 text-[var(--secondary)] px-[var(--space-48)] pt-[var(--space-32)] pb-[var(--space-32)]">
+    <section className="sticky top-0 z-20 bg-[var(--primary)] text-[var(--secondary)] px-[var(--space-48)] pt-[var(--space-32)] pb-[var(--space-32)]">
       <div className="grid grid-cols-12 gap-x-[var(--space-48)] gap-y-[var(--space-32)] font-mono text-[var(--text-body-sm)] leading-[1.6]">
         {/* Left — identity */}
-        <div className="col-span-12 md:col-span-3">
+        <div className="col-span-12 flex flex-col gap-[var(--space-16)] md:col-span-3">
           <div className="text-[var(--secondary)]">Ugur Ozkan</div>
+          {audioSlot}
         </div>
 
         {/* Center — role + location */}
