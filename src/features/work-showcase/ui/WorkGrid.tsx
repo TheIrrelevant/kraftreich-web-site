@@ -6,11 +6,11 @@
  * ---end-metadata---
  */
 
-import { placeholderWorks } from "@/entities/work-project/constants/placeholder-works";
+import { loadWorkProjects } from "@/shared/lib/content/work";
 import WorkCard from "@/entities/work-project/ui/WorkCard";
 
 export default function WorkGrid() {
-  const works = [...placeholderWorks].sort((a, b) => a.order - b.order);
+  const works = loadWorkProjects();
   return (
     <ul className="flex flex-col">
       {works.map((project) => (

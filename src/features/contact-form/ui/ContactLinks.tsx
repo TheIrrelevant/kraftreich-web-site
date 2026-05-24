@@ -1,9 +1,9 @@
 /**
  * ---metadata---
  * @file src/features/contact-form/ui/ContactLinks.tsx
- * @description Contact links. The form + server action lands when real backend scope is approved
- *              (Level-2 trigger: new dep + persistence boundary). Mailto-only for now.
- * @last-updated 2026-05-23
+ * @description Contact links. Mailto-only by design — no third-party email backend.
+ *              Replace placeholder address (hello@kraftreich.example) when the real one exists.
+ * @last-updated 2026-05-24
  * ---end-metadata---
  */
 
@@ -23,7 +23,7 @@ export default function ContactLinks() {
         Contact
       </Heading>
       <Text tone="muted" className="mt-[var(--space-6)]">
-        Direct channels. A contact form ships once a backend boundary is approved.
+        Direct channels.
       </Text>
       <ul className="mt-[var(--space-12)] flex flex-col gap-[var(--space-4)]">
         {channels.map((c) => (

@@ -1,7 +1,9 @@
 # ---metadata---
 # file: pnpm-workspace.yaml
-# description: pnpm config — approves postinstall scripts for sharp + unrs-resolver
-# last-updated: 2026-05-23
+# description: pnpm config — approves postinstall scripts for native binary builds.
+#              pnpm 11+ reads `allowBuilds` from pnpm-workspace.yaml; the legacy
+#              `pnpm.onlyBuiltDependencies` field in package.json is silently ignored.
+# last-updated: 2026-05-24
 # ---end-metadata---
 
 allowBuilds:

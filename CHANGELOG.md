@@ -3,14 +3,31 @@ type: doc
 category: log
 scope: repo
 description: Human-readable log of meaningful changes. Updated with every commit.
-last-updated: 2026-05-23
-last-model: claude-opus-4-7
-last-change: initial entries covering Phases 1–7
+last-updated: 2026-05-24
+last-model: amelia(claude-opus-4-7)
+last-change: post-Phase-7 debt cleanup (eslint flat-native, MDX loader, contact decision, pnpm config)
 ---
 
 # Changelog
 
 All meaningful changes to the Kraftreich Web Site, newest first. Format follows Keep-a-Changelog conventions; versioning is calendar-style until the first production tag.
+
+## [Unreleased] — 2026-05-24
+
+### Fixed
+- **ESLint flat-native composition.** Dropped `eslint-config-next` + `@eslint/eslintrc`'s `FlatCompat` bridge. Wired `@next/eslint-plugin-next` (core-web-vitals), `eslint-plugin-react-hooks@7`, `eslint-plugin-jsx-a11y@6`, and `@typescript-eslint` directly in `eslint.config.mjs`. Eliminates the circular-ref crash inside `eslint-config-next`'s legacy react extension under ESLint 10. Lint, typecheck, and `next build` all green; pre-commit (`lint-staged`) re-enables `eslint --fix` on TS/JS files.
+- **pnpm postinstall approval config.** Moved `sharp` + `unrs-resolver` build approval to `pnpm-workspace.yaml`'s `allowBuilds` map (pnpm 11+ canonical surface) and removed the silently-ignored `pnpm.onlyBuiltDependencies` field from `package.json`. Eliminates the per-command warning and the `ERR_PNPM_IGNORED_BUILDS` for `sharp`.
+
+### Added
+- **MDX content loader.** `src/shared/lib/content/work.ts` reads `src/content/work/*.mdx` synchronously at build, parses frontmatter via `gray-matter`, validates with a Zod schema, enforces `filename === slug`, and excludes `draft: true` in production. Three MDX files (`antagonist`, `threshold`, `loop-format`) replace the hardcoded placeholder array. `WorkProject` type aligned to README contract (`cover` required, `draft?` added).
+
+### Changed
+- **Contact remains mailto-only by design.** `ContactLinks.tsx` copy and metadata updated to reflect that no third-party email backend will ship; the placeholder address `hello@kraftreich.example` is the only swap point when a real address exists.
+
+### Removed
+- `src/entities/work-project/constants/placeholder-works.ts` (replaced by the MDX loader).
+- `eslint-config-next` + `@eslint/eslintrc` devDeps (53 packages, no longer needed).
+- `pnpm.onlyBuiltDependencies` field from `package.json` (pnpm 11 ignores it).
 
 ## [Unreleased] — 2026-05-23
 
