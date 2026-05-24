@@ -5,12 +5,27 @@ scope: repo
 description: Human-readable log of meaningful changes. Updated with every commit.
 last-updated: 2026-05-24
 last-model: amelia(claude-opus-4-7)
-last-change: brand alignment — tokens, fonts, primitives, video-driven particle hero
+last-change: identity strip + scroll-morph hero + headset mute toggle
 ---
 
 # Changelog
 
 All meaningful changes to the Kraftreich Web Site, newest first. Format follows Keep-a-Changelog conventions; versioning is calendar-style until the first production tag.
+
+## [Unreleased] — 2026-05-24 (late evening)
+
+### Added
+- **IdentityStrip feature.** `src/features/identity-strip/` — sticky-top Server Component with name + role/location + gallery index, monospace terminal-density layout. Replaces the global site nav as the page-level wayfinding surface.
+- **Scroll-driven hero morph.** `HomeHero` now fixes the particle canvas full-viewport and exposes a `morphRef` (0→1) updated via framer-motion `useScroll` over `COMPACT_SCROLL_PX` (600px). A 200vh scroll spacer gives the user the vertical distance needed to trigger the full morph. The R3F scene reads `morphRef` per frame to lerp particles from the loose video scatter into a tight Fibonacci sphere anchored at the left viewport edge.
+- **Headset mute toggle.** `src/features/audio-particle-cloud/ui/AudioMuteToggle.tsx` — fixed-position headset icon aligned under the IdentityStrip name column. Renders via React portal to `document.body` to escape the hero section's `fixed` stacking context. Visible only after the user has activated audio AND scrolled past the morph threshold. Mutes via the output `GainNode` (gain.value 0 ↔ 0.3) so the analyser keeps reading frequency data and the sphere keeps pulsing visually.
+- **`next.config.mjs` outputFileTracingRoot pin.** Anchors build tracing to the repository directory so multiple lockfiles on the machine cannot mislead Next into walking up to a parent user directory.
+
+### Changed
+- **AudioParticleCloud.** Rebuilt as a single-file scene with internal video element + audio graph management (previous `use-audio-analyser.ts` hook removed, logic inlined). Particles now random-scatter on an open 16:9 plane in the idle state and morph into a left-anchored sphere; a 5-tap luma blur drives per-particle density via `uThreshold + aRand` cutoffs. The previous bottom-right mute control is removed in favour of the headset toggle.
+
+### Removed
+- **SiteNav.** `src/features/site-nav/` and its layout mount — wayfinding moved into the IdentityStrip.
+- **`use-audio-analyser` hook.** Logic merged into `AudioParticleCloud` to keep the video element + audio graph + mute state colocated.
 
 ## [Unreleased] — 2026-05-24 (evening)
 

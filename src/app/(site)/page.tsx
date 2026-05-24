@@ -7,7 +7,13 @@
  */
 
 import HomeHero from "@/features/home-hero/ui/HomeHero";
+import IdentityStrip from "@/features/identity-strip/ui/IdentityStrip";
 
 export default function HomePage() {
-  return <HomeHero />;
+  return (
+    <>
+      <IdentityStrip />
+      <HomeHero />
+    </>
+  );
 }

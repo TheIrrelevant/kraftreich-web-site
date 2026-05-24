@@ -46,7 +46,6 @@ src/features/<feature-name>/
 - `work-detail/` — case study viewer
 - `about-bio/` — about page
 - `contact-form/` — contact form (uses `api/`)
-- `site-nav/` — composed in `app/layout.tsx`
 - `site-footer/` — composed in `app/layout.tsx`
 
 Features are not pre-scaffolded. Create a feature folder when you start building it.
