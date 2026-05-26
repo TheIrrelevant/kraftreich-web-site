@@ -3,10 +3,30 @@ type: doc
 category: log
 scope: repo
 description: Human-readable log of meaningful changes. Updated with every commit.
-last-updated: 2026-05-24
-last-model: amelia(claude-opus-4-7)
-last-change: work grid + audio-mute provider + footer removal
+last-updated: 2026-05-26
+last-model: amelia(composer)
+last-change: remove particle hero, fix grid overlay scroll
 ---
+
+# Changelog
+
+All meaningful changes to the Kraftreich Web Site, newest first. Format follows Keep a Changelog conventions; versioning is calendar-style until the first production tag.
+
+## [Unreleased] — 2026-05-26
+
+### Removed
+- **`audio-particle-cloud` feature.** Deleted `src/features/audio-particle-cloud/` — `AudioParticleCloud`, `AudioMuteToggle`, and `hero-video` constants.
+- **`audio-mute` shared context.** Deleted `src/shared/lib/audio-mute/`.
+- **`shared/three` R3F scaffolding.** Deleted `src/shared/three/` — no remaining 3D scenes.
+- **Three.js dependencies.** Removed `@react-three/fiber`, `@react-three/drei`, `three`, and `@types/three`.
+- **Hero runway spacer and scroll opacity fade.** Removed 50vh idle gap, particle morph scroll hooks, and section-level grid opacity animation tied to the retired particle hero.
+- **`audioSlot` prop on IdentityStrip.**
+
+### Changed
+- **`HomeHero`.** Thin client wrapper: scroll reset on mount + `<WorkGrid />`.
+- **`WorkGrid`.** Always-opaque `bg-primary` at `Z_HOME_GRID` so the grid covers the sticky IdentityStrip on scroll (fixes strip text bleeding through a transparent section).
+- **`IdentityStrip`.** Removed bottom padding; grid sits flush under strip content.
+- **`home-layers.ts`.** Added to `src/shared/constants/` with z-index tokens only.
 
 # Changelog
 

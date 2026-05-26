@@ -1,35 +1,32 @@
 /**
  * ---metadata---
  * @file src/features/identity-strip/ui/IdentityStrip.tsx
- * @description Identity strip rendered directly below the hero. Three columns: name + email,
- *              role + location, and the gallery index table. Monospace, terminal-density,
- *              archive-feel. Server Component — accepts an optional `audioSlot` so the audio
- *              mute toggle can live structurally inside the strip without breaching the
- *              cross-feature import rule (page.tsx composes the slot).
- * @last-updated 2026-05-24
+ * @description Identity strip — sticky top-0, lowest home layer (Z_HOME_STRIP). Stays pinned while
+ *              WorkGrid (Z_HOME_GRID) scrolls up over it with opaque bg (zegzulka overlay scroll).
+ * @last-updated 2026-05-26
+ * @last-change remove bottom padding; grid sits flush under strip content
  * ---end-metadata---
  */
 
-import { type ReactNode } from "react";
+import { Z_HOME_STRIP } from "@/shared/constants/home-layers";
 import { GALLERY_INDEX } from "@/features/identity-strip/model/gallery-index";
 
-export default function IdentityStrip({ audioSlot }: { audioSlot?: ReactNode }) {
+export default function IdentityStrip() {
   return (
-    <section className="sticky top-0 z-20 bg-[var(--primary)] text-[var(--secondary)] px-[var(--space-48)] pt-[var(--space-32)] pb-[var(--space-32)]">
+    <section
+      className="sticky top-0 bg-[var(--primary)] px-[var(--space-48)] pt-[var(--space-32)] text-[var(--secondary)]"
+      style={{ zIndex: Z_HOME_STRIP }}
+    >
       <div className="grid grid-cols-12 gap-x-[var(--space-48)] gap-y-[var(--space-32)] font-mono text-[var(--text-body-sm)] leading-[1.6]">
-        {/* Left — identity */}
         <div className="col-span-12 flex flex-col gap-[var(--space-16)] md:col-span-3">
           <div className="text-[var(--secondary)]">Ugur Ozkan</div>
-          {audioSlot}
         </div>
 
-        {/* Center — role + location */}
         <div className="col-span-12 md:col-span-4">
           <div className="text-[var(--secondary)]">Designer, Artist &amp; LLM Engineer</div>
           <div className="text-[var(--accent)]/60">Istanbul, Turkey</div>
         </div>
 
-        {/* Right — gallery index */}
         <ul className="col-span-12 md:col-span-5">
           {GALLERY_INDEX.map((item) => (
             <li
