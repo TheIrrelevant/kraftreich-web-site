@@ -5,7 +5,7 @@ scope: repo
 description: Human-readable log of meaningful changes. Updated with every commit.
 last-updated: 2026-05-26
 last-model: amelia(composer)
-last-change: remove particle hero, fix grid overlay scroll
+last-change: vinyl particles portal above work grid
 ---
 
 # Changelog
@@ -13,6 +13,16 @@ last-change: remove particle hero, fix grid overlay scroll
 All meaningful changes to the Kraftreich Web Site, newest first. Format follows Keep a Changelog conventions; versioning is calendar-style until the first production tag.
 
 ## [Unreleased] — 2026-05-26
+
+### Added
+- **`vinyl-particles` feature.** `src/features/vinyl-particles/` — interactive vinyl-disc particle field below the IdentityStrip name column. Concentric grooves, center label, outer rim, and spindle hole; pointer repulsion with spring return; BPM-driven spin (125 BPM) pauses while muted. Canvas portals to `document.body` via `VinylMount` anchor so particles stay above the scrolling work grid (`Z_HOME_VINYL`).
+- **`audio-mute` context (restored).** `src/shared/lib/audio-mute/` — shared mute/activation state for `VinylAudioEngine` and headset toggle; gain applied on `GainNode` so the analyser keeps reading while muted.
+- **Identity model.** `src/features/identity-strip/model/identity.ts` — name and email constants for the left column.
+- **Hero audio asset.** `public/assets/audio/bergain.mp3` — autoplay after user activation at 30% gain.
+
+### Changed
+- **`IdentityStrip`.** `muteSlot` / `vinylSlot` props; left column typography aligned with center column; email link added.
+- **`home-layers.ts`.** `Z_HOME_VINYL` (40) above `Z_HOME_GRID` (30) for vinyl-over-grid stacking.
 
 ### Removed
 - **`audio-particle-cloud` feature.** Deleted `src/features/audio-particle-cloud/` — `AudioParticleCloud`, `AudioMuteToggle`, and `hero-video` constants.

@@ -19,11 +19,13 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@react-three/fiber": "^9.6.1",
     "framer-motion": "^12.40.0",
     "gray-matter": "^4.0.3",
     "next": "^15.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "three": "^0.184.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -32,6 +34,7 @@
     "@types/node": "^20.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.184.1",
     "@typescript-eslint/eslint-plugin": "^8.59.4",
     "@typescript-eslint/parser": "^8.59.4",
     "eslint": "^10.4.0",
