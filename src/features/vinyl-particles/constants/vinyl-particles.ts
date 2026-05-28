@@ -40,3 +40,12 @@ export function resolveVinylRadiansPerSecond(bpm: number = VINYL_TRACK_BPM): num
   const rpm = (bpm / VINYL_BPM_REFERENCE) * VINYL_BASE_RPM;
   return (rpm * 2 * Math.PI) / 60;
 }
+
+/** Intro — particles assemble into disc (ms). */
+export const VINYL_LOADING_ASSEMBLE_MS = 2_000;
+
+/** Intro — black overlay fade before migration (ms). */
+export const VINYL_LOADING_REVEAL_MS = 650;
+
+/** Intro — disc travels from assembly anchor to mount (ms). */
+export const VINYL_LOADING_MIGRATE_MS = 1_200;

@@ -1,94 +1,76 @@
 /**
  * ---metadata---
  * @file src/features/work-grid/model/grid-items.ts
- * @description Ordered list of grid items rendered by WorkGrid. Index 0 is the About Me anchor;
- *              indexes 1..14 mirror the IdentityStrip gallery list (gallery-01..gallery-14).
- *              Click-to-scroll targets use `slug` as the DOM id; placeholder description copy
- *              ships as a single short sentence until real content lands.
- * @last-updated 2026-05-24
+ * @description Grid item types and lookup helpers for the three-column home work grid. Data is
+ *              supplied at runtime via GalleryCatalogProvider from the build-time gallery loader.
+ * @last-updated 2026-05-28
+ * @last-change wire grid types to gallery catalog instead of placeholder builders
  * ---end-metadata---
  */
+
+import type { AboutMeExperience } from "@/entities/about-me/types/about-me";
+import type { CoverAspect } from "@/entities/gallery-item/types/gallery-item";
+import type { GalleryCatalog } from "@/features/work-grid/model/gallery-catalog";
+
+export type { CoverAspect };
+
+export const COVER_ASPECT_CLASS: Record<CoverAspect, string> = {
+  portrait: "aspect-[3/4]",
+  tall: "aspect-[4/5]",
+  landscape: "aspect-[16/10]",
+  wide: "aspect-[2/1]",
+  square: "aspect-square",
+};
 
 export type GridItem = {
   slug: string;
   title: string;
   description: string;
+  coverAspect: CoverAspect;
+  /** CSS aspect-ratio value derived from cover image dimensions, e.g. "3/2". */
+  coverAspectRatio: string;
+  coverImage?: string;
+  coverGif?: string;
+  coverVideo?: string;
+  coverVideoPoster?: string;
+  /** CSS aspect-ratio for cover video when it differs from the poster image. */
+  coverVideoAspectRatio?: string;
+  /** About Me click-through slide images. */
+  coverSlides?: ReadonlyArray<string>;
+  /** About Me work history lines below the bio. */
+  experience?: ReadonlyArray<AboutMeExperience>;
 };
 
-export const GRID_ITEMS: ReadonlyArray<GridItem> = [
-  {
-    slug: "about-me",
-    title: "About Me",
-    description: "Designer, artist and LLM engineer working between systems, surfaces and sound.",
-  },
-  {
-    slug: "gallery-01",
-    title: "Gallery 01",
-    description: "Placeholder description for gallery-01. Two sentence limit.",
-  },
-  {
-    slug: "gallery-02",
-    title: "Gallery 02",
-    description: "Placeholder description for gallery-02. Two sentence limit.",
-  },
-  {
-    slug: "gallery-03",
-    title: "Gallery 03",
-    description: "Placeholder description for gallery-03. Two sentence limit.",
-  },
-  {
-    slug: "gallery-04",
-    title: "Gallery 04",
-    description: "Placeholder description for gallery-04. Two sentence limit.",
-  },
-  {
-    slug: "gallery-05",
-    title: "Gallery 05",
-    description: "Placeholder description for gallery-05. Two sentence limit.",
-  },
-  {
-    slug: "gallery-06",
-    title: "Gallery 06",
-    description: "Placeholder description for gallery-06. Two sentence limit.",
-  },
-  {
-    slug: "gallery-07",
-    title: "Gallery 07",
-    description: "Placeholder description for gallery-07. Two sentence limit.",
-  },
-  {
-    slug: "gallery-08",
-    title: "Gallery 08",
-    description: "Placeholder description for gallery-08. Two sentence limit.",
-  },
-  {
-    slug: "gallery-09",
-    title: "Gallery 09",
-    description: "Placeholder description for gallery-09. Two sentence limit.",
-  },
-  {
-    slug: "gallery-10",
-    title: "Gallery 10",
-    description: "Placeholder description for gallery-10. Two sentence limit.",
-  },
-  {
-    slug: "gallery-11",
-    title: "Gallery 11",
-    description: "Placeholder description for gallery-11. Two sentence limit.",
-  },
-  {
-    slug: "gallery-12",
-    title: "Gallery 12",
-    description: "Placeholder description for gallery-12. Two sentence limit.",
-  },
-  {
-    slug: "gallery-13",
-    title: "Gallery 13",
-    description: "Placeholder description for gallery-13. Two sentence limit.",
-  },
-  {
-    slug: "gallery-14",
-    title: "Gallery 14",
-    description: "Placeholder description for gallery-14. Two sentence limit.",
-  },
-];
+export type GridColumn = {
+  id: string;
+  title: string;
+  items: ReadonlyArray<GridItem>;
+};
+
+export type GridItemWithCategory = GridItem & {
+  categoryId: string;
+  categoryTitle: string;
+};
+
+export const ABOUT_ME_SLUG = "about-me";
+
+export function flattenGridItems(catalog: GalleryCatalog): ReadonlyArray<GridItemWithCategory> {
+  return catalog.columns.flatMap((column) =>
+    column.items.map((item) => ({
+      ...item,
+      categoryId: column.id,
+      categoryTitle: column.title,
+    })),
+  );
+}
+
+export function opensGalleryDetail(slug: string, catalog: GalleryCatalog): boolean {
+  return slug !== ABOUT_ME_SLUG && slug in catalog.detailsBySlug;
+}
+
+export function getGridItemBySlug(
+  slug: string,
+  catalog: GalleryCatalog,
+): GridItemWithCategory | undefined {
+  return flattenGridItems(catalog).find((item) => item.slug === slug);
+}

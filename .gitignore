@@ -34,3 +34,6 @@ pnpm-debug.log*
 .turbo
 .cache
 coverage
+
+# Gallery media — local only (large binaries; not tracked in git)
+public/assets/gallery/

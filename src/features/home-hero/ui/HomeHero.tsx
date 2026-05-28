@@ -3,14 +3,14 @@
  * @file src/features/home-hero/ui/HomeHero.tsx
  * @description Home scroll section — mounts WorkGrid and resets scroll position on load.
  * @last-updated 2026-05-26
- * @last-change remove particle runway spacer; grid sits directly under IdentityStrip
+ * @last-change mount WorkGridSection with gallery detail selection
  * ---end-metadata---
  */
 
 "use client";
 
 import { useEffect } from "react";
-import WorkGrid from "@/features/work-grid/ui/WorkGrid";
+import WorkGridSection from "@/features/work-grid/ui/WorkGridSection";
 
 export default function HomeHero() {
   useEffect(() => {
@@ -20,5 +20,5 @@ export default function HomeHero() {
     window.scrollTo(0, 0);
   }, []);
 
-  return <WorkGrid />;
+  return <WorkGridSection />;
 }

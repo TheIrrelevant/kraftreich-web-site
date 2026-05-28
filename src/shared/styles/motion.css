@@ -41,3 +41,42 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Work grid — zegzulka-style dark overlay; hovered column at full colour */
+.work-grid-column-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+  background-color: var(--primary);
+  opacity: var(--grid-overlay-opacity, 0.65);
+  transition: opacity var(--motion-slow) var(--ease-out);
+}
+
+.work-grid-column:hover .work-grid-column-overlay {
+  opacity: 0;
+}
+
+.work-grid:has(.work-grid-column:hover) .work-grid-column:not(:hover) .work-grid-column-overlay {
+  opacity: min(
+    calc(var(--grid-overlay-opacity, 0.65) + var(--grid-overlay-hover-boost, 0.2)),
+    0.88
+  );
+}
+
+/* Gallery detail panel — enter on open */
+.gallery-detail-panel {
+  animation: gallery-detail-enter var(--motion-slow) var(--ease-out);
+}
+
+@keyframes gallery-detail-enter {
+  from {
+    opacity: 0;
+    transform: translateX(1.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

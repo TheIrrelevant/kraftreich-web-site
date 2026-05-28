@@ -11,3 +11,9 @@
 export const IDENTITY_NAME = "U\u011fur \u00d6zkan";
 
 export const IDENTITY_EMAIL = "ugurozkan35@gmail.com";
+
+/** Identity strip middle column — title line. */
+export const IDENTITY_TITLE = "Designer, Artist & AI Creative Technologist";
+
+/** Identity strip middle column — location line. */
+export const IDENTITY_LOCATION = "Istanbul, Turkey";
