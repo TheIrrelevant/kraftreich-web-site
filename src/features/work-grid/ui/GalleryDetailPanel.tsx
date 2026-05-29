@@ -12,7 +12,14 @@
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import type { GalleryItemDetail } from "@/entities/gallery-item/types/gallery-item";
 import { type GridItemWithCategory } from "@/features/work-grid/model/grid-items";
-import { Z_HOME_GALLERY_DETAIL } from "@/shared/constants/home-layers";
+import {
+  GALLERY_DETAIL_VINYL_LAYER_ID,
+  Z_HOME_GALLERY_DETAIL,
+  Z_HOME_GALLERY_DETAIL_BACKDROP,
+  Z_HOME_GALLERY_DETAIL_CLOSE,
+  Z_HOME_GALLERY_DETAIL_PANEL,
+  Z_HOME_GALLERY_DETAIL_VINYL,
+} from "@/shared/constants/home-layers";
 import GalleryDetailPhotoGrid from "@/features/work-grid/ui/GalleryDetailPhotoGrid";
 import Heading from "@/shared/ui/Heading";
 
@@ -123,20 +130,32 @@ export default function GalleryDetailPanel({ item, detail, onClose }: Props) {
       <button
         type="button"
         className="absolute inset-0 bg-[var(--primary)]/60 backdrop-blur-[1px]"
+        style={{ zIndex: Z_HOME_GALLERY_DETAIL_BACKDROP }}
         onClick={onClose}
         aria-label="Close gallery detail"
+      />
+
+      <div
+        id={GALLERY_DETAIL_VINYL_LAYER_ID}
+        className="pointer-events-none absolute inset-0"
+        style={{ zIndex: Z_HOME_GALLERY_DETAIL_VINYL }}
+        aria-hidden
       />
 
       <button
         ref={closeRef}
         type="button"
         onClick={onClose}
-        className="fixed left-[var(--space-48)] top-[var(--space-48)] z-[calc(var(--z-modal)+1)] font-mono text-[var(--text-body-sm)] leading-[1.6] text-[var(--secondary)] transition-opacity hover:opacity-70"
+        className="fixed left-[var(--space-48)] top-[var(--space-48)] font-mono text-[var(--text-body-sm)] leading-[1.6] text-[var(--secondary)] transition-opacity hover:opacity-70"
+        style={{ zIndex: Z_HOME_GALLERY_DETAIL_CLOSE }}
       >
         Close
       </button>
 
-      <aside className="gallery-detail-panel relative ml-auto flex h-full w-full flex-col overflow-y-auto bg-[var(--primary)] md:w-[72%] lg:max-w-[68rem]">
+      <aside
+        className="gallery-detail-panel relative ml-auto flex h-full w-full flex-col overflow-y-auto bg-[var(--primary)] md:w-[72%] lg:max-w-[68rem]"
+        style={{ zIndex: Z_HOME_GALLERY_DETAIL_PANEL }}
+      >
         <div className="shrink-0 p-[var(--space-16)] md:p-[var(--space-24)]">
           <div
             className={mediaSurfaceClass}

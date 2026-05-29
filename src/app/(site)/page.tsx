@@ -15,7 +15,6 @@ import VinylAssemblyAnchor from "@/features/vinyl-particles/ui/VinylAssemblyAnch
 import VinylAudioEngine from "@/features/vinyl-particles/ui/VinylAudioEngine";
 import VinylLoadingOverlay from "@/features/vinyl-particles/ui/VinylLoadingOverlay";
 import VinylMount from "@/features/vinyl-particles/ui/VinylMount";
-import VinylMuteToggle from "@/features/vinyl-particles/ui/VinylMuteToggle";
 import VinylParticles from "@/features/vinyl-particles/ui/VinylParticles";
 import { AudioMuteProvider } from "@/shared/lib/audio-mute/audio-mute-context";
 import { loadGalleryCatalog } from "@/shared/lib/content/gallery";
@@ -38,7 +37,6 @@ export default function HomePage() {
                 <IdentityStrip
                   galleryIndex={catalog.index}
                   skills={catalog.skills}
-                  muteSlot={<VinylMuteToggle />}
                   vinylSlot={<VinylMount />}
                   assemblySlot={<VinylAssemblyAnchor />}
                 />

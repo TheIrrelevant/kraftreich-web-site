@@ -17,3 +17,28 @@ export const IDENTITY_TITLE = "Designer, Artist & AI Creative Technologist";
 
 /** Identity strip middle column — location line. */
 export const IDENTITY_LOCATION = "Istanbul, Turkey";
+
+export type IdentitySocialLink = {
+  id: "instagram" | "behance" | "linkedin";
+  label: string;
+  href: string;
+};
+
+/** Identity strip column-one social links beside the vinyl mute control. */
+export const IDENTITY_SOCIAL_LINKS: ReadonlyArray<IdentitySocialLink> = [
+  {
+    id: "instagram",
+    label: "Instagram",
+    href: "https://www.instagram.com/kraftreich/",
+  },
+  {
+    id: "behance",
+    label: "Behance",
+    href: "https://www.behance.net/ugurozkan35",
+  },
+  {
+    id: "linkedin",
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/kraftreich-studio",
+  },
+];

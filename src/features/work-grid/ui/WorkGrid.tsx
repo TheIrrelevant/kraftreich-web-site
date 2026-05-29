@@ -26,6 +26,7 @@ import {
   HOME_SECTION_X_PADDING_CLASS,
   HOME_THREE_COLUMN_GRID_CLASS,
   Z_HOME_GRID,
+  Z_HOME_GRID_HEADER,
 } from "@/shared/constants/home-layers";
 import { useGalleryCatalog } from "@/shared/lib/gallery-catalog/gallery-catalog-context";
 import type { CSSProperties } from "react";
@@ -102,7 +103,10 @@ function GridCell({
 
   if (!isInteractive) {
     return (
-      <article id={slug} className="relative flex flex-col gap-[var(--space-16)]">
+      <article
+        id={slug}
+        className="relative scroll-mt-[var(--space-48)] flex flex-col gap-[var(--space-16)]"
+      >
         {cover}
         {copy}
         {experienceList}
@@ -116,7 +120,7 @@ function GridCell({
       id={slug}
       onClick={() => onSelect(slug)}
       aria-pressed={isSelected}
-      className="group/cell flex w-full flex-col gap-[var(--space-16)] text-left outline-none focus-visible:ring-1 focus-visible:ring-[var(--secondary)]"
+      className="group/cell scroll-mt-[var(--space-48)] flex w-full flex-col gap-[var(--space-16)] text-left outline-none focus-visible:ring-1 focus-visible:ring-[var(--secondary)]"
     >
       {cover}
       {copy}
@@ -158,7 +162,10 @@ export default function WorkGrid({ columns, selectedSlug = null, onSelect }: Pro
             >
               <div className="work-grid-column-overlay" aria-hidden />
 
-              <h2 className="relative z-20 font-mono text-[15px] leading-[1.6] text-[var(--secondary)]">
+              <h2
+                className="work-grid-column-title sticky top-0 bg-[var(--primary)] pb-[var(--space-16)] font-mono text-[var(--secondary)]"
+                style={{ zIndex: Z_HOME_GRID_HEADER }}
+              >
                 {column.title}
               </h2>
 

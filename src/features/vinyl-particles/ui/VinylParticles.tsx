@@ -34,7 +34,11 @@ import {
 } from "@/features/vinyl-particles/lib/vinyl-disc-layout";
 import { VINYL_ASSEMBLY_ID } from "@/features/vinyl-particles/ui/VinylAssemblyAnchor";
 import { VINYL_MOUNT_ID } from "@/features/vinyl-particles/ui/VinylMount";
-import { Z_HOME_VINYL } from "@/shared/constants/home-layers";
+import {
+  GALLERY_DETAIL_VINYL_LAYER_ID,
+  Z_HOME_GALLERY_DETAIL_VINYL,
+  Z_HOME_VINYL,
+} from "@/shared/constants/home-layers";
 import { useGallerySelection } from "@/shared/lib/gallery-selection/gallery-selection-context";
 import { useAudioMute } from "@/shared/lib/audio-mute/audio-mute-context";
 
@@ -433,11 +437,18 @@ export default function VinylParticles() {
       window.removeEventListener("resize", sync);
       observer?.disconnect();
     };
-  }, [mounted, isComplete]);
+  }, [mounted, isComplete, isGalleryOpen]);
 
-  if (!mounted || isGalleryOpen) return null;
+  if (!mounted) return null;
 
-  if (!isComplete) {
+  const galleryLayer =
+    isGalleryOpen && typeof document !== "undefined"
+      ? document.getElementById(GALLERY_DETAIL_VINYL_LAYER_ID)
+      : null;
+  const portalTarget = galleryLayer ?? document.body;
+  const particleZIndex = isGalleryOpen ? Z_HOME_GALLERY_DETAIL_VINYL : Z_HOME_VINYL;
+
+  if (!isComplete && !isGalleryOpen) {
     return createPortal(
       <div
         className="pointer-events-auto fixed inset-0"
@@ -450,13 +461,15 @@ export default function VinylParticles() {
     );
   }
 
+  if (isGalleryOpen && !galleryLayer) return null;
+
   if (!mountRect) return null;
 
   return createPortal(
     <div
       className="pointer-events-none fixed overflow-hidden"
       style={{
-        zIndex: Z_HOME_VINYL,
+        zIndex: particleZIndex,
         left: mountRect.left,
         top: mountRect.top,
         width: mountRect.width,
@@ -468,6 +481,6 @@ export default function VinylParticles() {
         <VinylCanvas muted={muted} mode="idle" />
       </div>
     </div>,
-    document.body,
+    portalTarget,
   );
 }

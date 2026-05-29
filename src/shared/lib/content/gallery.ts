@@ -297,10 +297,15 @@ function toGridItem(detail: GalleryItemDetail): GridItem {
   };
 }
 
+function parseIndexYear(year: string): number {
+  const match = year.match(/\d{4}/);
+  return match ? Number.parseInt(match[0], 10) : 0;
+}
+
 function buildIndex(
   detailsBySlug: Readonly<Record<string, GalleryItemDetail>>,
 ): GalleryIndexItem[] {
-  return Array.from({ length: GALLERY_INDEX_COUNT }, (_, index) => {
+  const items = Array.from({ length: GALLERY_INDEX_COUNT }, (_, index) => {
     const slug = `gallery-${String(index + 1).padStart(2, "0")}`;
     const detail = detailsBySlug[slug];
 
@@ -311,6 +316,8 @@ function buildIndex(
       tags: GALLERY_INDEX_TAGS[slug] ?? "\u2014",
     };
   });
+
+  return items.sort((a, b) => parseIndexYear(b.year) - parseIndexYear(a.year));
 }
 
 function discoverGallerySlugs(): string[] {
@@ -329,6 +336,7 @@ export function loadGalleryCatalog(): GalleryCatalog {
   }
 
   const WORK_SLUGS = [
+    "gallery-12",
     "gallery-01",
     "gallery-02",
     "gallery-03",
@@ -340,7 +348,6 @@ export function loadGalleryCatalog(): GalleryCatalog {
     "gallery-08",
     "gallery-06",
     "gallery-07",
-    "gallery-12",
     "gallery-11",
     "gallery-09",
     "gallery-10",

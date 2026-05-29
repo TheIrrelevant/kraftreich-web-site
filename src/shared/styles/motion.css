@@ -43,6 +43,11 @@
 }
 
 /* Work grid — zegzulka-style dark overlay; hovered column at full colour */
+.work-grid-column-title {
+  font-size: var(--text-grid-column-title);
+  line-height: var(--text-grid-column-title--line-height);
+}
+
 .work-grid-column-overlay {
   position: absolute;
   inset: 0;

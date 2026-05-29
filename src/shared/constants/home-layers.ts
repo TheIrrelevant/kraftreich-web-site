@@ -11,11 +11,22 @@
 /** Gallery detail panel — above vinyl and grid when a cell is selected. */
 export const Z_HOME_GALLERY_DETAIL = 80;
 
+/** Layer inside gallery detail — vinyl particles sit above the dimmed backdrop. */
+export const GALLERY_DETAIL_VINYL_LAYER_ID = "gallery-detail-vinyl-layer";
+
+export const Z_HOME_GALLERY_DETAIL_BACKDROP = 0;
+export const Z_HOME_GALLERY_DETAIL_VINYL = 1;
+export const Z_HOME_GALLERY_DETAIL_PANEL = 2;
+export const Z_HOME_GALLERY_DETAIL_CLOSE = 3;
+
 /** Vinyl particle disc — bleeds above the scrolling work grid. */
 export const Z_HOME_VINYL = 40;
 
 /** Work grid — scrolls up and covers IdentityStrip text columns. */
 export const Z_HOME_GRID = 30;
+
+/** Sticky column headers (About Me / Work / Art) once the grid reaches the viewport top. */
+export const Z_HOME_GRID_HEADER = 35;
 
 /** Identity strip text — document-flow header, underneath the grid overlay. */
 export const Z_HOME_STRIP = 20;

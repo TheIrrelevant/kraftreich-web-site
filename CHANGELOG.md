@@ -3,14 +3,31 @@ type: doc
 category: log
 scope: repo
 description: Human-readable log of meaningful changes. Updated with every commit.
-last-updated: 2026-05-26
+last-updated: 2026-05-29
 last-model: amelia(composer)
-last-change: vinyl particles portal above work grid
+last-change: home page v1 — sticky headers, identity strip polish, gallery detail vinyl
 ---
 
 # Changelog
 
 All meaningful changes to the Kraftreich Web Site, newest first. Format follows Keep a Changelog conventions; versioning is calendar-style until the first production tag.
+
+## [Unreleased] — 2026-05-29
+
+### Added
+- **`GalleryIndexList`.** Clickable identity-strip project index sorted newest-first; scrolls to the matching grid cell without opening the detail panel.
+- **`IdentityIconRow`.** Fourth row in column one — headset mute + Instagram / Behance / LinkedIn icon links in one uniform row.
+- **Gallery detail vinyl layer.** `GALLERY_DETAIL_VINYL_LAYER_ID` keeps the vinyl particle disc visible above the dimmed backdrop when a gallery item is open.
+
+### Changed
+- **`gallery.ts`.** Moved `gallery-12` (Schwarzgewalt) to the top of the Work column; index rows sort by year descending.
+- **`WorkGrid`.** Sticky column headers (About Me / Work / Art) at 16px via `--text-grid-column-title`; grid cells use `scroll-mt` for index deep-links.
+- **`IdentityStrip`.** Social links consolidated into `IdentityIconRow`; Behance → `ugurozkan35`, LinkedIn → `kraftreich-studio`.
+- **`VinylParticles`.** No longer unmounts when gallery detail is open — portals into the gallery vinyl layer instead.
+- **`GalleryDetailPanel`.** Explicit z-index stack for backdrop, vinyl, panel, and close control.
+
+### Removed
+- **`docs/GALLERY-ITEM-DETAIL.md`**, **`docs/HOME-PAGE-CONTENT.md`.** Superseded by markdown content under `public/assets/gallery/`.
 
 ## [Unreleased] — 2026-05-26
 

@@ -60,6 +60,9 @@
   --text-body-sm: 0.875rem; /* 14 — Avenir Regular */
   --text-body-sm--line-height: 1.5;
 
+  --text-grid-column-title: 1rem; /* 16 — sticky About Me / Work / Art headers */
+  --text-grid-column-title--line-height: 1.6;
+
   --text-caption: 0.75rem; /* 12 — Avenir Light */
   --text-caption--line-height: 1.4;
 
