@@ -36,8 +36,18 @@ pnpm-debug.log*
 coverage
 
 # Gallery media — local only (large binaries; not tracked in git)
-# Exception: about-me portraits ship with Pages. Parent must use /* so negation works.
+# Exceptions ship with Pages. Parent must use /* so negation works.
 public/assets/gallery/*
 !public/assets/gallery/about-me/
 !public/assets/gallery/about-me/**
-public/assets/gallery/about-me/.DS_Store
+!public/assets/gallery/gallery-08/
+!public/assets/gallery/gallery-08/**
+!public/assets/gallery/gallery-09/
+!public/assets/gallery/gallery-09/**
+!public/assets/gallery/gallery-10/
+!public/assets/gallery/gallery-10/**
+!public/assets/gallery/gallery-11/
+!public/assets/gallery/gallery-11/**
+# GitHub hard limit 100MB — keep Claritas hero local-only for now
+public/assets/gallery/gallery-10/hero.mp4
+public/assets/gallery/**/.DS_Store

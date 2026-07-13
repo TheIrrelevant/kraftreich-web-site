@@ -103,7 +103,11 @@ I am currently focused on connecting landscape architecture, creative direction,
     experience: [
       { yearLabel: "2026", company: "Kraftreich", title: "Landscape Architect | AI Architect" },
       { yearLabel: "2024", company: "Accurate Digital", title: "Landscape Architect" },
-      { yearLabel: "2023", company: "Sabri Pa\u015fayi\u011fit Architects", title: "Landscape Architect" },
+      {
+        yearLabel: "2023",
+        company: "Sabri Pa\u015fayi\u011fit Architects",
+        title: "Landscape Architect",
+      },
       { yearLabel: "2019", company: "Upwork", title: "Landscape Architect" },
       { yearLabel: "2018", company: "Uzba\u015f", title: "Landscape Architect" },
     ],
@@ -367,6 +371,22 @@ function discoverGallerySlugs(): string[] {
     .sort();
 }
 
+function prefixGalleryDetailUrls(detail: GalleryItemDetail): GalleryItemDetail {
+  return {
+    ...detail,
+    coverImage: detail.coverImage ? withBasePath(detail.coverImage) : detail.coverImage,
+    coverGif: detail.coverGif ? withBasePath(detail.coverGif) : detail.coverGif,
+    coverVideo: detail.coverVideo ? withBasePath(detail.coverVideo) : detail.coverVideo,
+    coverVideoPoster: detail.coverVideoPoster
+      ? withBasePath(detail.coverVideoPoster)
+      : detail.coverVideoPoster,
+    galleryMedia: detail.galleryMedia.map((item) => ({
+      ...item,
+      src: withBasePath(item.src),
+    })),
+  };
+}
+
 export function loadGalleryCatalog(): GalleryCatalog {
   const detailsBySlug = new Map<string, GalleryItemDetail>();
 
@@ -415,7 +435,9 @@ export function loadGalleryCatalog(): GalleryCatalog {
     { id: "art", title: "Art", items: artItems },
   ];
 
-  const detailsRecord = Object.fromEntries(detailsBySlug) as Record<string, GalleryItemDetail>;
+  const detailsRecord = Object.fromEntries(
+    [...detailsBySlug.entries()].map(([slug, detail]) => [slug, prefixGalleryDetailUrls(detail)]),
+  ) as Record<string, GalleryItemDetail>;
 
   return {
     columns,
