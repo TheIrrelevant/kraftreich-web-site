@@ -13,6 +13,7 @@ import { join } from "node:path";
 import { cwd } from "node:process";
 import { parse as parseYaml } from "yaml";
 import { aboutMeContentSchema, type AboutMeContent } from "@/entities/about-me/types/about-me";
+import { withBasePath } from "@/shared/lib/base-path";
 import {
   galleryItemDetailSchema,
   type CoverAspect,
@@ -101,6 +102,13 @@ Before founding Kraftreich, I worked across landscape design, planting design, a
 I am currently focused on connecting landscape architecture, creative direction, and LLM-assisted tools to create more structured, intelligent, and visually coherent workflows for contemporary design practice.`,
     experience: [{ yearLabel: "2026", company: "Kraftreich", title: "Founder" }],
     coverAspect: "portrait",
+    coverImage: "/assets/gallery/about-me/me-1.png",
+    slides: [
+      "/assets/gallery/about-me/me-1.png",
+      "/assets/gallery/about-me/me-2.JPEG",
+      "/assets/gallery/about-me/me-3.JPEG",
+      "/assets/gallery/about-me/me-4.png",
+    ],
     skills: "Landscape Architecture · Creative Direction · AI Tools",
   };
 }
@@ -141,8 +149,8 @@ function toAboutMeGridItem(content: AboutMeContent): GridItem {
     description: content.description,
     coverAspect: content.coverAspect,
     coverAspectRatio,
-    coverImage: content.coverImage,
-    coverSlides: slides,
+    coverImage: content.coverImage ? withBasePath(content.coverImage) : undefined,
+    coverSlides: slides.map((src) => withBasePath(src)),
     experience: content.experience,
   };
 }

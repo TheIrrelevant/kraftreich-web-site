@@ -36,4 +36,8 @@ pnpm-debug.log*
 coverage
 
 # Gallery media — local only (large binaries; not tracked in git)
-public/assets/gallery/
+# Exception: about-me portraits ship with Pages. Parent must use /* so negation works.
+public/assets/gallery/*
+!public/assets/gallery/about-me/
+!public/assets/gallery/about-me/**
+public/assets/gallery/about-me/.DS_Store
