@@ -82,7 +82,7 @@ function GridCell({
     <p
       className={
         slug === ABOUT_ME_SLUG
-          ? "relative z-20 font-mono text-[var(--text-caption)] leading-[1.5] text-[var(--accent)]/70"
+          ? "relative z-20 whitespace-pre-line font-mono text-[var(--text-caption)] leading-[1.5] text-[var(--accent)]/70"
           : "relative z-20 line-clamp-2 font-mono text-[var(--text-caption)] leading-[1.5] text-[var(--accent)]/70"
       }
     >
