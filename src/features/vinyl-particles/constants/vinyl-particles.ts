@@ -2,9 +2,11 @@
  * ---metadata---
  * @file src/features/vinyl-particles/constants/vinyl-particles.ts
  * @description Particle budget, vinyl geometry, spin rate (RPM / BPM), and hero audio source.
- * @last-updated 2026-05-26
+ * @last-updated 2026-07-13
  * ---end-metadata---
  */
+
+import { withBasePath } from "@/shared/lib/base-path";
 
 export const VINYL_PARTICLE_COUNT = 18_000;
 
@@ -30,7 +32,7 @@ export const VINYL_TRACK_BPM = 125;
 export const VINYL_BPM_REFERENCE = 120;
 
 /** Public path to the IdentityStrip hero audio file. */
-export const VINYL_AUDIO_SRC = "/assets/audio/bergain.mp3";
+export const VINYL_AUDIO_SRC = withBasePath("/assets/audio/bergain.mp3");
 
 /** Output gain when unmuted (0–1). */
 export const VINYL_AUDIO_GAIN = 0.3;

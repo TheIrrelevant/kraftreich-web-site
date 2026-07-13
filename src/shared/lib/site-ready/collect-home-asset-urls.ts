@@ -2,16 +2,17 @@
  * ---metadata---
  * @file src/shared/lib/site-ready/collect-home-asset-urls.ts
  * @description Collects home-page media URLs for the vinyl intro readiness gate.
- * @last-updated 2026-05-28
+ * @last-updated 2026-07-13
  * ---end-metadata---
  */
 
 import { VINYL_AUDIO_SRC } from "@/features/vinyl-particles/constants/vinyl-particles";
+import { withBasePath } from "@/shared/lib/base-path";
 import type { GalleryCatalog } from "@/features/work-grid/model/gallery-catalog";
 import { flattenGridItems } from "@/features/work-grid/model/grid-items";
 
 function addUrl(set: Set<string>, url?: string) {
-  if (url) set.add(url);
+  if (url) set.add(withBasePath(url));
 }
 
 function addUrls(set: Set<string>, urls?: ReadonlyArray<string>) {
