@@ -43,7 +43,6 @@ export default function VinylAudioEngine({ children }: { children: ReactNode }) 
     audio.src = VINYL_AUDIO_SRC;
     audio.loop = true;
     audio.preload = "auto";
-    audio.playsInline = true;
     audio.crossOrigin = "anonymous";
     audio.autoplay = true;
     audioRef.current = audio;
