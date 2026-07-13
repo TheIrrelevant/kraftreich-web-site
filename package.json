@@ -16,7 +16,8 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "preview": "npx --yes serve out"
   },
   "dependencies": {
     "@react-three/fiber": "^9.6.1",

@@ -4,7 +4,7 @@
  * @description Build-time loader for gallery content in public/assets/gallery/. Parses YAML blocks
  *              embedded in gallery-*.md files, validates with Zod, and assembles grid columns,
  *              identity-strip index rows, and detail lookup maps.
- * @last-updated 2026-05-28
+ * @last-updated 2026-07-13
  * ---end-metadata---
  */
 
@@ -82,10 +82,23 @@ function discoverAboutMeSlides(coverImage?: string): string[] {
     .map((entry) => `/assets/gallery/about-me/${entry}`);
 }
 
+function fallbackAboutMeContent(): AboutMeContent {
+  return {
+    slug: "about-me",
+    title: "About Me",
+    headline: "Kraftreich",
+    location: "—",
+    description: "Portfolio content will appear here once gallery assets are published.",
+    experience: [{ yearLabel: "—", company: "Kraftreich", title: "—" }],
+    coverAspect: "portrait",
+    skills: "Design · Art Direction · Creative Technology",
+  };
+}
+
 function loadAboutMeContent(): AboutMeContent {
   const filePath = join(ABOUT_ME_ROOT, "about-me.md");
   if (!existsSync(filePath)) {
-    throw new Error("Missing About Me content file: public/assets/gallery/about-me/about-me.md");
+    return fallbackAboutMeContent();
   }
 
   const raw = readFileSync(filePath, "utf8");
@@ -321,6 +334,8 @@ function buildIndex(
 }
 
 function discoverGallerySlugs(): string[] {
+  if (!existsSync(GALLERY_ROOT)) return [];
+
   return readdirSync(GALLERY_ROOT, { withFileTypes: true })
     .filter((entry) => entry.isDirectory() && /^gallery-\d{2}$/.test(entry.name))
     .map((entry) => entry.name)
@@ -353,19 +368,19 @@ export function loadGalleryCatalog(): GalleryCatalog {
     "gallery-10",
   ] as const;
 
-  function gridItemForSlug(slug: string): GridItem {
+  function gridItemForSlug(slug: string): GridItem | null {
     const detail = detailsBySlug.get(slug);
-    if (!detail) throw new Error(`Missing required art gallery content: ${slug}`);
-    return toGridItem(detail);
+    return detail ? toGridItem(detail) : null;
   }
 
-  const workItems = WORK_SLUGS.map((slug) => {
-    const detail = detailsBySlug.get(slug);
-    if (!detail) throw new Error(`Missing required work gallery content: ${slug}`);
-    return toGridItem(detail);
-  });
+  // Soft-empty: gallery media is gitignored; CI/Pages builds with zero folders must succeed.
+  const workItems = WORK_SLUGS.map((slug) => gridItemForSlug(slug)).filter(
+    (item): item is GridItem => item !== null,
+  );
 
-  const artItems = ART_SLUGS.map((slug) => gridItemForSlug(slug));
+  const artItems = ART_SLUGS.map((slug) => gridItemForSlug(slug)).filter(
+    (item): item is GridItem => item !== null,
+  );
 
   const aboutMeContent = loadAboutMeContent();
   const aboutMeItem = toAboutMeGridItem(aboutMeContent);
