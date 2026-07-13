@@ -100,7 +100,13 @@ My recent projects include Schwarzgewalt, a design automation platform for gener
 Before founding Kraftreich, I worked across landscape design, planting design, architectural visualization, 3D modeling, project videos, creative direction, brand strategy, motion, and multimedia production. This background still shapes how I think: technology should not only function, but also carry spatial clarity, visual intention, and design taste.
 
 I am currently focused on connecting landscape architecture, creative direction, and LLM-assisted tools to create more structured, intelligent, and visually coherent workflows for contemporary design practice.`,
-    experience: [{ yearLabel: "2026", company: "Kraftreich", title: "Founder" }],
+    experience: [
+      { yearLabel: "2026", company: "Kraftreich", title: "Landscape Architect | AI Architect" },
+      { yearLabel: "2024", company: "Accurate Digital", title: "Landscape Architect" },
+      { yearLabel: "2023", company: "Sabri Pa\u015fayi\u011fit Architects", title: "Landscape Architect" },
+      { yearLabel: "2019", company: "Upwork", title: "Landscape Architect" },
+      { yearLabel: "2018", company: "Uzba\u015f", title: "Landscape Architect" },
+    ],
     coverAspect: "portrait",
     coverImage: "/assets/gallery/about-me/me-1.png",
     slides: [
