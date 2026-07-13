@@ -30,19 +30,19 @@ description: |-
 experience:
   - yearLabel: "2026"
     company: Kraftreich
-    title: Founder
+    title: Landscape Architect | AI Architect
   - yearLabel: "2024"
     company: Accurate Digital
-    title: Creative Director
+    title: Landscape Architect
   - yearLabel: "2023"
     company: Sabri Paşayiğit Architects
-    title: Art Director
-  - yearLabel: "2022"
-    company: Buff Agency
-    title: Art Director
+    title: Landscape Architect
+  - yearLabel: "2019"
+    company: Upwork
+    title: Landscape Architect
   - yearLabel: "2018"
-    company: Produck
-    title: Designer
+    company: Uzbaş
+    title: Landscape Architect
 
 coverAspect: portrait
 coverImage: /assets/gallery/about-me/me-1.png
