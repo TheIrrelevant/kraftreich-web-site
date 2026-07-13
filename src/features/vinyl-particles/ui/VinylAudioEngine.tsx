@@ -1,10 +1,11 @@
 /**
  * ---metadata---
  * @file src/features/vinyl-particles/ui/VinylAudioEngine.tsx
- * @description Invisible audio graph for Bergain.mp3 — autoplay on mount with 30% output gain,
- *              fallback activation on user gesture, analyser level fed to vinyl spin modulation.
- * @last-updated 2026-05-26
- * @last-change stable effect deps via callback refs; gain owned by mute context
+ * @description Invisible audio graph for Bergain.mp3 — unmuted autoplay on mount when the browser
+ *              allows it; otherwise muted fallback + unlock on gesture or mute-toggle unmute.
+ *              Analyser level feeds vinyl spin modulation.
+ * @last-updated 2026-07-13
+ * @last-change unlock element.muted + AudioContext on unmute; wait canplay before autoplay
  * ---end-metadata---
  */
 
@@ -26,20 +27,23 @@ export default function VinylAudioEngine({ children }: { children: ReactNode }) 
   const audioLevelRef = useRef(0);
   const graphRef = useRef<AudioGraph | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const { registerActivation, registerOutputGain } = useAudioMute();
+  const { muted, registerActivation, markAutoplayBlocked, registerOutputGain } = useAudioMute();
   const registerActivationRef = useRef(registerActivation);
+  const markAutoplayBlockedRef = useRef(markAutoplayBlocked);
   const registerOutputGainRef = useRef(registerOutputGain);
 
   useEffect(() => {
     registerActivationRef.current = registerActivation;
+    markAutoplayBlockedRef.current = markAutoplayBlocked;
     registerOutputGainRef.current = registerOutputGain;
-  }, [registerActivation, registerOutputGain]);
+  }, [registerActivation, markAutoplayBlocked, registerOutputGain]);
 
   useEffect(() => {
     const audio = document.createElement("audio");
     audio.src = VINYL_AUDIO_SRC;
     audio.loop = true;
     audio.preload = "auto";
+    audio.playsInline = true;
     audio.crossOrigin = "anonymous";
     audio.autoplay = true;
     audioRef.current = audio;
@@ -72,7 +76,19 @@ export default function VinylAudioEngine({ children }: { children: ReactNode }) 
       return graph;
     };
 
-    const tryStart = async () => {
+    const waitUntilCanPlay = () =>
+      new Promise<void>((resolve) => {
+        if (audio.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+          resolve();
+          return;
+        }
+        const finish = () => resolve();
+        audio.addEventListener("canplay", finish, { once: true });
+        audio.addEventListener("canplaythrough", finish, { once: true });
+        audio.addEventListener("error", finish, { once: true });
+      });
+
+    const unlockAudible = async () => {
       const graph = ensureGraph();
       if (!graph) return false;
 
@@ -84,13 +100,28 @@ export default function VinylAudioEngine({ children }: { children: ReactNode }) 
         registerActivationRef.current();
         return true;
       } catch {
-        audio.muted = true;
-        try {
-          await audio.play();
-        } catch {
-          return false;
-        }
         return false;
+      }
+    };
+
+    const tryStart = async () => {
+      await waitUntilCanPlay();
+
+      // Prefer audible autoplay (allowed on some browsers / returning visits).
+      if (await unlockAudible()) return;
+
+      markAutoplayBlockedRef.current();
+
+      // Policy block: keep a muted stream warm so the first gesture can unmute instantly.
+      audio.muted = true;
+      const graph = ensureGraph();
+      if (graph) {
+        await graph.context.resume().catch(() => undefined);
+      }
+      try {
+        await audio.play();
+      } catch {
+        // Gesture handler / unmute path will retry.
       }
     };
 
@@ -98,20 +129,11 @@ export default function VinylAudioEngine({ children }: { children: ReactNode }) 
 
     const onGesture = (event: Event) => {
       const target = event.target;
+      // Mute toggle owns unmute via the `muted` effect below; avoid double-toggle race.
       if (target instanceof Element && target.closest("[data-vinyl-mute-toggle]")) {
         return;
       }
-
-      const graph = ensureGraph();
-      if (!graph) return;
-      audio.muted = false;
-      void graph.context.resume().catch(() => undefined);
-      void audio
-        .play()
-        .then(() => {
-          registerActivationRef.current();
-        })
-        .catch(() => undefined);
+      void unlockAudible();
     };
 
     window.addEventListener("pointerdown", onGesture);
@@ -146,6 +168,29 @@ export default function VinylAudioEngine({ children }: { children: ReactNode }) 
       audioRef.current = null;
     };
   }, []);
+
+  // Mute toggle only flipped GainNode before — element.muted stayed true after blocked autoplay.
+  useEffect(() => {
+    const audio = audioRef.current;
+    const graph = graphRef.current;
+    if (!audio) return;
+
+    if (muted) {
+      if (graph) graph.outputGain.gain.value = 0;
+      return;
+    }
+
+    audio.muted = false;
+    if (graph) {
+      void graph.context.resume().catch(() => undefined);
+    }
+    void audio
+      .play()
+      .then(() => {
+        registerActivationRef.current();
+      })
+      .catch(() => undefined);
+  }, [muted]);
 
   return (
     <VinylAudioLevelProvider audioLevelRef={audioLevelRef}>{children}</VinylAudioLevelProvider>

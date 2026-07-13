@@ -3,8 +3,8 @@
  * @file src/shared/lib/audio-mute/audio-mute-context.tsx
  * @description Shared mute state for hero audio. VinylAudioEngine owns the graph and registers
  *              the output GainNode; VinylMuteToggle reads muted/toggle from the IdentityStrip slot.
- * @last-updated 2026-05-26
- * @last-change stabilize registerOutputGain with mutedRef so mute toggle does not remount audio
+ * @last-updated 2026-07-13
+ * @last-change default unmuted for autoplay intent; expose markAutoplayBlocked when policy blocks
  * ---end-metadata---
  */
 
@@ -30,13 +30,14 @@ type AudioMuteContextValue = {
   hasActivated: boolean;
   toggleMute: () => void;
   registerActivation: () => void;
+  markAutoplayBlocked: () => void;
   registerOutputGain: (gain: GainNode | null) => void;
 };
 
 const AudioMuteContext = createContext<AudioMuteContextValue | null>(null);
 
 export function AudioMuteProvider({ children }: { children: ReactNode }) {
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(false);
   const [hasActivated, setHasActivated] = useState(false);
   const activatedAtRef = useRef<number | null>(null);
   const outputGainRef = useRef<GainNode | null>(null);
@@ -90,9 +91,23 @@ export function AudioMuteProvider({ children }: { children: ReactNode }) {
     applyGain(false);
   }, [applyGain]);
 
+  const markAutoplayBlocked = useCallback(() => {
+    if (hasActivatedRef.current) return;
+    mutedRef.current = true;
+    setMuted(true);
+    applyGain(true);
+  }, [applyGain]);
+
   const value = useMemo<AudioMuteContextValue>(
-    () => ({ muted, hasActivated, toggleMute, registerActivation, registerOutputGain }),
-    [muted, hasActivated, toggleMute, registerActivation, registerOutputGain],
+    () => ({
+      muted,
+      hasActivated,
+      toggleMute,
+      registerActivation,
+      markAutoplayBlocked,
+      registerOutputGain,
+    }),
+    [muted, hasActivated, toggleMute, registerActivation, markAutoplayBlocked, registerOutputGain],
   );
 
   return <AudioMuteContext.Provider value={value}>{children}</AudioMuteContext.Provider>;
