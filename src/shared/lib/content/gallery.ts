@@ -330,10 +330,10 @@ function toGridItem(detail: GalleryItemDetail): GridItem {
     description: detail.description,
     coverAspect: detail.coverAspect,
     coverAspectRatio,
-    coverImage: detail.coverImage,
-    coverGif: detail.coverGif,
-    coverVideo,
-    coverVideoPoster: detail.coverVideoPoster,
+    coverImage: detail.coverImage ? withBasePath(detail.coverImage) : undefined,
+    coverGif: detail.coverGif ? withBasePath(detail.coverGif) : undefined,
+    coverVideo: coverVideo ? withBasePath(coverVideo) : undefined,
+    coverVideoPoster: detail.coverVideoPoster ? withBasePath(detail.coverVideoPoster) : undefined,
     coverVideoAspectRatio,
   };
 }
@@ -380,9 +380,15 @@ function prefixGalleryDetailUrls(detail: GalleryItemDetail): GalleryItemDetail {
     coverVideoPoster: detail.coverVideoPoster
       ? withBasePath(detail.coverVideoPoster)
       : detail.coverVideoPoster,
+    hero: {
+      ...detail.hero,
+      src: withBasePath(detail.hero.src),
+      poster: detail.hero.poster ? withBasePath(detail.hero.poster) : detail.hero.poster,
+    },
     galleryMedia: detail.galleryMedia.map((item) => ({
       ...item,
       src: withBasePath(item.src),
+      poster: item.poster ? withBasePath(item.poster) : item.poster,
     })),
   };
 }
