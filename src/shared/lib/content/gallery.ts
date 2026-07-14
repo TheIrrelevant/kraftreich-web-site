@@ -30,7 +30,7 @@ const GALLERY_INDEX_TAGS: Record<string, string> = {
   "gallery-01": "Urban Design, Landscape",
   "gallery-02": "Urban Design, Landscape",
   "gallery-03": "Landscape Design",
-  "gallery-04": "Art Direction, Ads",
+  "gallery-04": "Concept Sketch",
   "gallery-05": "Brand Design",
   "gallery-06": "Vinyl Design, Artwork",
   "gallery-07": "Photography",
@@ -45,7 +45,7 @@ const GALLERY_INDEX_LABELS: Record<string, string> = {
   "gallery-01": "Tugh",
   "gallery-02": "Hadrut",
   "gallery-03": "Yangi O'zbekiston Park",
-  "gallery-04": "Vamos",
+  "gallery-04": "iPad Sketches",
   "gallery-05": "Benjamin Clean Kitchen",
   "gallery-06": "Klangkuenstler",
   "gallery-07": "Figure Series",
@@ -408,11 +408,10 @@ export function loadGalleryCatalog(): GalleryCatalog {
     "gallery-10",
     "gallery-02",
     "gallery-12",
-    "gallery-04",
     "gallery-05",
   ] as const;
 
-  const ART_SLUGS = ["gallery-11", "gallery-06", "gallery-07"] as const;
+  const ART_SLUGS = ["gallery-04", "gallery-11", "gallery-06", "gallery-07"] as const;
 
   function gridItemForSlug(slug: string): GridItem | null {
     const detail = detailsBySlug.get(slug);
