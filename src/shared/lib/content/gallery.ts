@@ -28,7 +28,7 @@ const GALLERY_ROOT = join(cwd(), "public", "assets", "gallery");
 
 const GALLERY_INDEX_TAGS: Record<string, string> = {
   "gallery-01": "Urban Design, Landscape",
-  "gallery-02": "Art Direction",
+  "gallery-02": "Urban Design, Landscape",
   "gallery-03": "Art Direction, Ads",
   "gallery-04": "Art Direction, Ads",
   "gallery-05": "Brand Design",
@@ -43,7 +43,7 @@ const GALLERY_INDEX_TAGS: Record<string, string> = {
 
 const GALLERY_INDEX_LABELS: Record<string, string> = {
   "gallery-01": "Tugh",
-  "gallery-02": "Yargi",
+  "gallery-02": "Hadrut",
   "gallery-03": "Bursa Bulbulu",
   "gallery-04": "Vamos",
   "gallery-05": "Benjamin Clean Kitchen",
@@ -405,8 +405,8 @@ export function loadGalleryCatalog(): GalleryCatalog {
     "gallery-09",
     "gallery-10",
     "gallery-01",
-    "gallery-12",
     "gallery-02",
+    "gallery-12",
     "gallery-03",
     "gallery-04",
     "gallery-05",
