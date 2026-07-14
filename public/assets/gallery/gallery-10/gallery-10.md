@@ -11,8 +11,8 @@ status: draft
 
 ```yaml
 slug: gallery-10
-categoryId: art
-categoryTitle: Art
+categoryId: work
+categoryTitle: Work
 
 # Grid
 title: Claritas Architectural Concept

@@ -11,8 +11,8 @@ status: draft
 
 ```yaml
 slug: gallery-08
-categoryId: art
-categoryTitle: Art
+categoryId: work
+categoryTitle: Work
 
 # Grid
 title: Monolith Architectural Concept

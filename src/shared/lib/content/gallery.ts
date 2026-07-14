@@ -401,6 +401,9 @@ export function loadGalleryCatalog(): GalleryCatalog {
   }
 
   const WORK_SLUGS = [
+    "gallery-08",
+    "gallery-09",
+    "gallery-10",
     "gallery-12",
     "gallery-01",
     "gallery-02",
@@ -409,14 +412,7 @@ export function loadGalleryCatalog(): GalleryCatalog {
     "gallery-05",
   ] as const;
 
-  const ART_SLUGS = [
-    "gallery-08",
-    "gallery-06",
-    "gallery-07",
-    "gallery-11",
-    "gallery-09",
-    "gallery-10",
-  ] as const;
+  const ART_SLUGS = ["gallery-11", "gallery-06", "gallery-07"] as const;
 
   function gridItemForSlug(slug: string): GridItem | null {
     const detail = detailsBySlug.get(slug);

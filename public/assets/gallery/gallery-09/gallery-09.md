@@ -11,8 +11,8 @@ status: draft
 
 ```yaml
 slug: gallery-09
-categoryId: art
-categoryTitle: Art
+categoryId: work
+categoryTitle: Work
 
 # Grid
 title: Atrium Serenitatis Architectural Concept
