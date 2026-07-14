@@ -401,10 +401,10 @@ export function loadGalleryCatalog(): GalleryCatalog {
   }
 
   const WORK_SLUGS = [
-    "gallery-01",
     "gallery-08",
     "gallery-09",
     "gallery-10",
+    "gallery-01",
     "gallery-12",
     "gallery-02",
     "gallery-03",
