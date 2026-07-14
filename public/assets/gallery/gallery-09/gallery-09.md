@@ -18,7 +18,7 @@ categoryTitle: Art
 title: Atrium Serenitatis Architectural Concept
 description: Designed a meditative urban atrium park as a solo architectural concept, using concrete, water, bamboo, stepped voids, and an experimental 3D-to-Midjourney rendering workflow.
 coverAspect: landscape
-coverImage: /assets/gallery/gallery-09/cover.png
+coverImage: /assets/gallery/gallery-09/cover.jpg
 
 # Header
 yearLabel: "2025"
@@ -77,37 +77,37 @@ hero:
 galleryMedia:
   - id: media-01
     type: image
-    src: /assets/gallery/gallery-09/media-01-urban-park-courtyard-01.png
+    src: /assets/gallery/gallery-09/media-01-urban-park-courtyard-01.jpg
     aspectClass: landscape
     caption: "Courtyard view showing stepped concrete platforms, water, and planted islands."
   - id: media-02
     type: image
-    src: /assets/gallery/gallery-09/media-02-urban-park-courtyard-02.png
+    src: /assets/gallery/gallery-09/media-02-urban-park-courtyard-02.jpg
     aspectClass: landscape
     caption: "Urban park angle focused on bamboo clusters and the calm interior void."
   - id: media-03
     type: image
-    src: /assets/gallery/gallery-09/media-03-urban-park-water-axis.png
+    src: /assets/gallery/gallery-09/media-03-urban-park-water-axis.jpg
     aspectClass: landscape
     caption: "Water axis study using reflection to structure the atrium's quiet center."
   - id: media-04
     type: image
-    src: /assets/gallery/gallery-09/media-04-urban-park-bamboo-void.png
+    src: /assets/gallery/gallery-09/media-04-urban-park-bamboo-void.jpg
     aspectClass: landscape
     caption: "Bamboo and concrete composition balancing soft planting against heavy enclosure."
   - id: media-05
     type: image
-    src: /assets/gallery/gallery-09/media-05-urban-park-steps.png
+    src: /assets/gallery/gallery-09/media-05-urban-park-steps.jpg
     aspectClass: landscape
     caption: "Stepped platform study controlling movement, pause, and civic gathering."
   - id: media-06
     type: image
-    src: /assets/gallery/gallery-09/media-06-urban-park-threshold.png
+    src: /assets/gallery/gallery-09/media-06-urban-park-threshold.jpg
     aspectClass: landscape
     caption: "Threshold view showing how the park separates itself from the surrounding city."
   - id: media-07
     type: image
-    src: /assets/gallery/gallery-09/media-07-material-retexture-study.png
+    src: /assets/gallery/gallery-09/media-07-material-retexture-study.jpg
     aspectClass: landscape
     caption: "Material retexture study generated through Midjourney Edit for surface refinement."
 ```

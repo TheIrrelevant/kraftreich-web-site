@@ -18,7 +18,7 @@ categoryTitle: Art
 title: Monolith Architectural Concept
 description: Designed a cliffside concrete residence as a solo architectural concept, using 3D modeling, Midjourney rendering, material retexturing, and video generation as an experimental visualization pipeline.
 coverAspect: portrait
-coverImage: /assets/gallery/gallery-08/cover.png
+coverImage: /assets/gallery/gallery-08/cover.jpg
 
 # Header
 yearLabel: "2025"
@@ -77,52 +77,52 @@ hero:
 galleryMedia:
   - id: media-01
     type: image
-    src: /assets/gallery/gallery-08/media-01-exterior-cliff-approach.png
+    src: /assets/gallery/gallery-08/media-01-exterior-cliff-approach.jpg
     aspectClass: landscape
     caption: "Exterior approach showing the residence embedded into the white coastal cliff."
   - id: media-02
     type: image
-    src: /assets/gallery/gallery-08/media-02-cave-entry.png
+    src: /assets/gallery/gallery-08/media-02-cave-entry.jpg
     aspectClass: landscape
     caption: "Cave threshold study where architecture becomes a cut inside the rock mass."
   - id: media-03
     type: image
-    src: /assets/gallery/gallery-08/media-03-living-room-sea-view.png
+    src: /assets/gallery/gallery-08/media-03-living-room-sea-view.jpg
     aspectClass: landscape
     caption: "Living room facing the sea through full-height glass and exposed concrete planes."
   - id: media-04
     type: image
-    src: /assets/gallery/gallery-08/media-04-pool-room.png
+    src: /assets/gallery/gallery-08/media-04-pool-room.jpg
     aspectClass: landscape
     caption: "Pool room study using water, concrete, and controlled light as the main materials."
   - id: media-05
     type: image
-    src: /assets/gallery/gallery-08/media-05-rave-room.png
+    src: /assets/gallery/gallery-08/media-05-rave-room.jpg
     aspectClass: landscape
     caption: "Rave room concept extending the residence into a darker ritual entertainment space."
   - id: media-06
     type: image
-    src: /assets/gallery/gallery-08/media-06-working-room.png
+    src: /assets/gallery/gallery-08/media-06-working-room.jpg
     aspectClass: landscape
     caption: "Working room shaped by concrete mass, sea-facing light, and restrained furniture."
   - id: media-07
     type: image
-    src: /assets/gallery/gallery-08/media-07-master-bedroom.png
+    src: /assets/gallery/gallery-08/media-07-master-bedroom.jpg
     aspectClass: landscape
     caption: "Master bedroom balancing privacy, horizon view, and low-key interior calm."
   - id: media-08
     type: image
-    src: /assets/gallery/gallery-08/media-08-master-bathroom.png
+    src: /assets/gallery/gallery-08/media-08-master-bathroom.jpg
     aspectClass: landscape
     caption: "Master bathroom using stone, concrete, and water as a continuous material language."
   - id: media-09
     type: image
-    src: /assets/gallery/gallery-08/media-09-guest-room.png
+    src: /assets/gallery/gallery-08/media-09-guest-room.jpg
     aspectClass: landscape
     caption: "Guest room continuing the cliffside residence's restrained concrete atmosphere."
   - id: media-10
     type: image
-    src: /assets/gallery/gallery-08/media-10-guest-bathroom.png
+    src: /assets/gallery/gallery-08/media-10-guest-bathroom.jpg
     aspectClass: landscape
     caption: "Guest bathroom study focused on shadow, texture, and minimal spatial control."
 ```

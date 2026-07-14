@@ -18,7 +18,7 @@ categoryTitle: Art
 title: Claritas Architectural Concept
 description: Designed Claritas as a solo architectural concept around white stone, water reflection, axial calm, and an experimental 3D-to-Midjourney visualization workflow.
 coverAspect: wide
-coverImage: /assets/gallery/gallery-10/cover.png
+coverImage: /assets/gallery/gallery-10/cover.jpg
 
 # Header
 yearLabel: "2025"
@@ -70,42 +70,42 @@ solution: >
 # Media
 hero:
   type: image
-  src: /assets/gallery/gallery-10/cover.png
+  src: /assets/gallery/gallery-10/cover.jpg
 
 galleryMedia:
   - id: media-01
     type: image
-    src: /assets/gallery/gallery-10/media-01-claritas-exterior-axis.png
+    src: /assets/gallery/gallery-10/media-01-claritas-exterior-axis.jpg
     aspectClass: landscape
     caption: "Exterior axis study using white stone, water, and reflection to create civic calm."
   - id: media-02
     type: image
-    src: /assets/gallery/gallery-10/media-02-claritas-reflection-study.png
+    src: /assets/gallery/gallery-10/media-02-claritas-reflection-study.jpg
     aspectClass: landscape
     caption: "Reflection study testing how mass and water reinforce the project's clarity."
   - id: media-03
     type: image
-    src: /assets/gallery/gallery-10/media-03-claritas-gallery-hall.png
+    src: /assets/gallery/gallery-10/media-03-claritas-gallery-hall.jpg
     aspectClass: landscape
     caption: "Interior gallery-like hall shaped by daylight, stone, and restrained monumental scale."
   - id: media-04
     type: image
-    src: /assets/gallery/gallery-10/media-04-claritas-interior-light.png
+    src: /assets/gallery/gallery-10/media-04-claritas-interior-light.jpg
     aspectClass: landscape
     caption: "Interior light study focusing on surface calm and controlled atmosphere."
   - id: media-05
     type: image
-    src: /assets/gallery/gallery-10/media-05-claritas-water-edge.png
+    src: /assets/gallery/gallery-10/media-05-claritas-water-edge.jpg
     aspectClass: landscape
     caption: "Water-edge composition where the building's mass extends into the reflective plane."
   - id: media-06
     type: image
-    src: /assets/gallery/gallery-10/media-06-claritas-threshold.png
+    src: /assets/gallery/gallery-10/media-06-claritas-threshold.jpg
     aspectClass: landscape
     caption: "Threshold view exploring entry, glass, stone, and the transition from exterior to interior."
   - id: media-07
     type: image
-    src: /assets/gallery/gallery-10/media-07-claritas-public-space.png
+    src: /assets/gallery/gallery-10/media-07-claritas-public-space.jpg
     aspectClass: landscape
     caption: "Public space study showing Claritas as a quiet monumental setting rather than a decorative landmark."
 ```
