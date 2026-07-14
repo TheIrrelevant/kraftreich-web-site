@@ -27,7 +27,7 @@ import { type GridColumn, type GridItem } from "@/features/work-grid/model/grid-
 const GALLERY_ROOT = join(cwd(), "public", "assets", "gallery");
 
 const GALLERY_INDEX_TAGS: Record<string, string> = {
-  "gallery-01": "Art Direction",
+  "gallery-01": "Urban Design, Landscape",
   "gallery-02": "Art Direction",
   "gallery-03": "Art Direction, Ads",
   "gallery-04": "Art Direction, Ads",
@@ -42,7 +42,7 @@ const GALLERY_INDEX_TAGS: Record<string, string> = {
 };
 
 const GALLERY_INDEX_LABELS: Record<string, string> = {
-  "gallery-01": "BKM",
+  "gallery-01": "Tugh",
   "gallery-02": "Yargi",
   "gallery-03": "Bursa Bulbulu",
   "gallery-04": "Vamos",
@@ -401,11 +401,11 @@ export function loadGalleryCatalog(): GalleryCatalog {
   }
 
   const WORK_SLUGS = [
+    "gallery-01",
     "gallery-08",
     "gallery-09",
     "gallery-10",
     "gallery-12",
-    "gallery-01",
     "gallery-02",
     "gallery-03",
     "gallery-04",
