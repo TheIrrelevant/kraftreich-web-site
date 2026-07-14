@@ -48,11 +48,13 @@ deliverablesExtra: >
   presentation.
 
 # Team
-team: []
+team:
+  - id: team-01
+    name: Dp Peyzaj
+    role: Landscape Design
 teamNarrative: >
-  Landscape design contribution covering park landscape systems, planting and water-edge
-  character, and visualization for the public park presentation.
-teamAttribution: "Landscape design"
+  Dp Peyzaj.
+teamAttribution: "Dp Peyzaj"
 
 # Problem & Solution
 summaryStatement: >
