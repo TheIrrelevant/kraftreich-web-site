@@ -4,7 +4,7 @@
  * @description Root layout. Loads global stylesheet and font variables. No chrome — nav and
  *              footer were both removed; the IdentityStrip carries identity + wayfinding inline.
  * @last-updated 2026-07-17
- * @last-change add favicon + apple-touch icon from logo-light
+ * @last-change prefix favicon URLs with withBasePath for Pages
  * ---end-metadata---
  */
 
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
   title: "Kraftreich",
   description: "Kraftreich portfolio web site",
   icons: {
-    icon: [{ url: "/favicon.png", type: "image/png" }],
-    apple: [{ url: "/apple-icon.png", type: "image/png" }],
+    icon: [{ url: withBasePath("/favicon.png"), type: "image/png" }],
+    apple: [{ url: withBasePath("/apple-icon.png"), type: "image/png" }],
   },
 };
 
