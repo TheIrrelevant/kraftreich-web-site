@@ -3,7 +3,8 @@
  * @file src/features/identity-strip/model/identity.ts
  * @description Identity strip contact fields. Name uses Unicode escapes for Turkish glyphs
  *              (workspace file policy — no literal Turkish characters in source).
- * @last-updated 2026-07-13
+ * @last-updated 2026-07-17
+ * @last-change Behance profile URL → ugur-ozkan
  * ---end-metadata---
  */
 
@@ -34,7 +35,7 @@ export const IDENTITY_SOCIAL_LINKS: ReadonlyArray<IdentitySocialLink> = [
   {
     id: "behance",
     label: "Behance",
-    href: "https://www.behance.net/ugurozkan35",
+    href: "https://www.behance.net/ugur-ozkan",
   },
   {
     id: "linkedin",

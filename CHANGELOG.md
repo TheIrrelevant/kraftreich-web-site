@@ -15,6 +15,7 @@ All meaningful changes to the Kraftreich Web Site, newest first. Format follows 
 ## [Unreleased] — 2026-07-17
 
 ### Changed
+- **Behance link.** Identity strip → `https://www.behance.net/ugur-ozkan`.
 - **Favicon.** Chrome tab / bookmark icon from `logo-light.png` (`public/favicon.png`, `src/app/icon.png`, apple-touch).
 - **Favicon Pages path.** Icon hrefs use `withBasePath` so Chrome loads `/kraftreich-web-site/favicon.png` (not root `/favicon.png`).
 - **Identity strip index / grid.** Removed Figure Series (`gallery-07`) and Schwarzgewalt (`gallery-12`) from the home index and Work/Art columns.
