@@ -5,7 +5,7 @@ scope: repo
 description: Human-readable log of meaningful changes. Updated with every commit.
 last-updated: 2026-07-17
 last-model: amelia(cursor-grok-4.5)
-last-change: vinyl assemble tracks load progress; play after intro
+last-change: remove Figure Series + Schwarzgewalt; update skills tools
 ---
 
 # Changelog
@@ -15,6 +15,8 @@ All meaningful changes to the Kraftreich Web Site, newest first. Format follows 
 ## [Unreleased] — 2026-07-17
 
 ### Changed
+- **Identity strip index / grid.** Removed Figure Series (`gallery-07`) and Schwarzgewalt (`gallery-12`) from the home index and Work/Art columns.
+- **Skills line.** Dropped Planting Design, Figma, Blender; added Autocad, Sketchup, Lumion (`about-me.md`).
 - **Vinyl intro assemble = asset-load progress.** `waitForSiteReady` reports `onProgress` (0–1); `VinylLoadingProvider` drives `assembleProgress` from that progress so particles gather across the full load window instead of finishing in 2s and waiting.
 - **Audible unlock after intro only.** `VinylAudioEngine` muted warm-starts during loading; gesture / mute-toggle unmute waits until vinyl intro `isComplete`.
 

@@ -4,7 +4,8 @@
  * @description Build-time loader for gallery content in public/assets/gallery/. Parses YAML blocks
  *              embedded in gallery-*.md files, validates with Zod, and assembles grid columns,
  *              identity-strip index rows, and detail lookup maps.
- * @last-updated 2026-07-13
+ * @last-updated 2026-07-17
+ * @last-change exclude Figure Series + Schwarzgewalt from index/grid; skills tools swap
  * ---end-metadata---
  */
 
@@ -57,6 +58,9 @@ const GALLERY_INDEX_LABELS: Record<string, string> = {
 };
 
 const GALLERY_INDEX_COUNT = 12;
+
+/** Identity-strip index / home grid exclusions (still keep markdown locally if needed). */
+const GALLERY_INDEX_EXCLUDED = new Set(["gallery-07", "gallery-12"]);
 
 const COVER_ASPECT_RATIO_FALLBACK: Record<CoverAspect, string> = {
   portrait: "3/4",
@@ -358,7 +362,9 @@ function buildIndex(
     };
   });
 
-  return items.sort((a, b) => parseIndexYear(b.year) - parseIndexYear(a.year));
+  return items
+    .filter((item) => !GALLERY_INDEX_EXCLUDED.has(item.slug))
+    .sort((a, b) => parseIndexYear(b.year) - parseIndexYear(a.year));
 }
 
 function discoverGallerySlugs(): string[] {
@@ -407,10 +413,9 @@ export function loadGalleryCatalog(): GalleryCatalog {
     "gallery-09",
     "gallery-10",
     "gallery-02",
-    "gallery-12",
   ] as const;
 
-  const ART_SLUGS = ["gallery-04", "gallery-05", "gallery-06", "gallery-07", "gallery-11"] as const;
+  const ART_SLUGS = ["gallery-04", "gallery-05", "gallery-06", "gallery-11"] as const;
 
   function gridItemForSlug(slug: string): GridItem | null {
     const detail = detailsBySlug.get(slug);

@@ -3,7 +3,7 @@ type: about-me-content
 category: home
 scope: about-me
 description: About Me grid card copy, click-through slide images, and identity strip skills line.
-last-updated: 2026-07-13
+last-updated: 2026-07-17
 status: draft
 ---
 
@@ -55,7 +55,7 @@ slides:
 
 skills: |
   Landscape Architecture, Creative Direction, AI Tools, Architectural Visualization,
-  Planting Design, Figma, Blender, Adobe Creative Collection
+  Autocad, Sketchup, Lumion, Adobe Creative Collection
 ```
 
 ## Slide images
