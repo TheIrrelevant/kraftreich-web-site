@@ -11,6 +11,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { avenir, warbler } from "@/shared/lib/fonts";
+import { withBasePath } from "@/shared/lib/base-path";
 
 export const metadata: Metadata = {
   title: "Kraftreich",
