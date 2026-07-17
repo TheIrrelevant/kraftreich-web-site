@@ -3,14 +3,20 @@ type: doc
 category: log
 scope: repo
 description: Human-readable log of meaningful changes. Updated with every commit.
-last-updated: 2026-05-29
-last-model: amelia(composer)
-last-change: home page v1 — sticky headers, identity strip polish, gallery detail vinyl
+last-updated: 2026-07-17
+last-model: amelia(cursor-grok-4.5)
+last-change: vinyl assemble tracks load progress; play after intro
 ---
 
 # Changelog
 
 All meaningful changes to the Kraftreich Web Site, newest first. Format follows Keep a Changelog conventions; versioning is calendar-style until the first production tag.
+
+## [Unreleased] — 2026-07-17
+
+### Changed
+- **Vinyl intro assemble = asset-load progress.** `waitForSiteReady` reports `onProgress` (0–1); `VinylLoadingProvider` drives `assembleProgress` from that progress so particles gather across the full load window instead of finishing in 2s and waiting.
+- **Audible unlock after intro only.** `VinylAudioEngine` muted warm-starts during loading; gesture / mute-toggle unmute waits until vinyl intro `isComplete`.
 
 ## [Unreleased] — 2026-05-29
 

@@ -2,7 +2,9 @@
  * ---metadata---
  * @file src/shared/lib/site-ready/wait-for-site-ready.ts
  * @description Waits for window load, fonts, catalog assets, and mounted DOM media.
- * @last-updated 2026-05-28
+ *              Reports 0–1 progress as each readiness unit completes (vinyl assemble driver).
+ * @last-updated 2026-07-17
+ * @last-change expose onProgress for vinyl assemble-as-progress-bar
  * ---end-metadata---
  */
 
@@ -14,6 +16,8 @@ export type SiteReadyOptions = {
   root?: HTMLElement | null;
   signal?: AbortSignal;
   timeoutMs?: number;
+  /** Called with 0–1 as each readiness unit completes. Final call is always 1 on resolve. */
+  onProgress?: (progress: number) => void;
 };
 
 function isAborted(signal?: AbortSignal) {
@@ -157,26 +161,59 @@ function waitForDomMedia(root: HTMLElement, signal?: AbortSignal): Promise<void>
 }
 
 export async function waitForSiteReady(options: SiteReadyOptions = {}): Promise<void> {
-  const { assetUrls = [], root, signal, timeoutMs = 45_000 } = options;
+  const { assetUrls = [], root, signal, timeoutMs = 45_000, onProgress } = options;
+
+  const uniqueUrls = [...new Set(assetUrls.filter(Boolean))];
+  // Units: window load + fonts + each asset URL + DOM media sweep.
+  const total = 2 + uniqueUrls.length + 1;
+  let done = 0;
+
+  const report = () => {
+    if (!onProgress || total <= 0) return;
+    onProgress(Math.min(1, done / total));
+  };
+
+  const tick = () => {
+    done += 1;
+    report();
+  };
 
   await waitForWindowLoad(signal);
   if (isAborted(signal)) return;
+  tick();
 
   if (document.fonts?.ready) {
     await document.fonts.ready;
   }
+  if (isAborted(signal)) return;
+  tick();
 
   await waitForNextFrames(2);
   if (isAborted(signal)) return;
 
-  const uniqueUrls = [...new Set(assetUrls.filter(Boolean))];
   await withTimeout(
-    Promise.all(uniqueUrls.map((url) => preloadAsset(url, signal))),
+    Promise.all(
+      uniqueUrls.map(async (url) => {
+        await preloadAsset(url, signal);
+        tick();
+      }),
+    ),
     timeoutMs,
     signal,
   );
   if (isAborted(signal)) return;
 
+  // Timeout may skip remaining asset ticks — snap remaining URL units so DOM media is last step.
+  const expectedAfterAssets = 2 + uniqueUrls.length;
+  if (done < expectedAfterAssets) {
+    done = expectedAfterAssets;
+    report();
+  }
+
   const scope = root ?? document.body;
   await withTimeout(waitForDomMedia(scope, signal), timeoutMs, signal);
+  if (isAborted(signal)) return;
+  tick();
+
+  onProgress?.(1);
 }

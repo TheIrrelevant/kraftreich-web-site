@@ -1,11 +1,11 @@
 /**
  * ---metadata---
  * @file src/features/vinyl-particles/ui/VinylAudioEngine.tsx
- * @description Invisible audio graph for Bergain.mp3 — unmuted autoplay on mount when the browser
- *              allows it; otherwise muted fallback + unlock on gesture or mute-toggle unmute.
+ * @description Invisible audio graph for Bergain.mp3 — muted warm-start during vinyl intro;
+ *              audible unlock only after intro complete (gesture or mute-toggle unmute).
  *              Analyser level feeds vinyl spin modulation.
- * @last-updated 2026-07-13
- * @last-change unlock element.muted + AudioContext on unmute; wait canplay before autoplay
+ * @last-updated 2026-07-17
+ * @last-change defer audible unlock until vinyl intro isComplete
  * ---end-metadata---
  */
 
@@ -14,6 +14,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { VINYL_AUDIO_SRC } from "@/features/vinyl-particles/constants/vinyl-particles";
 import { VinylAudioLevelProvider } from "@/features/vinyl-particles/context/vinyl-audio-level-context";
+import { useVinylLoading } from "@/features/vinyl-particles/context/vinyl-loading-context";
 import { useAudioMute } from "@/shared/lib/audio-mute/audio-mute-context";
 
 type AudioGraph = {
@@ -28,9 +29,15 @@ export default function VinylAudioEngine({ children }: { children: ReactNode }) 
   const graphRef = useRef<AudioGraph | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { muted, registerActivation, markAutoplayBlocked, registerOutputGain } = useAudioMute();
+  const { isComplete } = useVinylLoading();
+  const isCompleteRef = useRef(isComplete);
   const registerActivationRef = useRef(registerActivation);
   const markAutoplayBlockedRef = useRef(markAutoplayBlocked);
   const registerOutputGainRef = useRef(registerOutputGain);
+
+  useEffect(() => {
+    isCompleteRef.current = isComplete;
+  }, [isComplete]);
 
   useEffect(() => {
     registerActivationRef.current = registerActivation;
@@ -103,15 +110,11 @@ export default function VinylAudioEngine({ children }: { children: ReactNode }) 
       }
     };
 
-    const tryStart = async () => {
+    const tryWarmStartMuted = async () => {
       await waitUntilCanPlay();
-
-      // Prefer audible autoplay (allowed on some browsers / returning visits).
-      if (await unlockAudible()) return;
-
       markAutoplayBlockedRef.current();
 
-      // Policy block: keep a muted stream warm so the first gesture can unmute instantly.
+      // Keep a muted stream warm so the first post-intro gesture can unmute instantly.
       audio.muted = true;
       const graph = ensureGraph();
       if (graph) {
@@ -120,13 +123,16 @@ export default function VinylAudioEngine({ children }: { children: ReactNode }) 
       try {
         await audio.play();
       } catch {
-        // Gesture handler / unmute path will retry.
+        // Gesture handler / unmute path will retry after intro.
       }
     };
 
-    void tryStart();
+    void tryWarmStartMuted();
 
     const onGesture = (event: Event) => {
+      // Intro owns the loading screen — no audible unlock until vinyl assemble + migrate finish.
+      if (!isCompleteRef.current) return;
+
       const target = event.target;
       // Mute toggle owns unmute via the `muted` effect below; avoid double-toggle race.
       if (target instanceof Element && target.closest("[data-vinyl-mute-toggle]")) {
@@ -179,6 +185,9 @@ export default function VinylAudioEngine({ children }: { children: ReactNode }) 
       return;
     }
 
+    // Do not unmute via toggle during the loading intro.
+    if (!isComplete) return;
+
     audio.muted = false;
     if (graph) {
       void graph.context.resume().catch(() => undefined);
@@ -189,7 +198,7 @@ export default function VinylAudioEngine({ children }: { children: ReactNode }) 
         registerActivationRef.current();
       })
       .catch(() => undefined);
-  }, [muted]);
+  }, [muted, isComplete]);
 
   return (
     <VinylAudioLevelProvider audioLevelRef={audioLevelRef}>{children}</VinylAudioLevelProvider>

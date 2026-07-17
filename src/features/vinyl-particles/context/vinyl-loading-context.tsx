@@ -1,8 +1,10 @@
 /**
  * ---metadata---
  * @file src/features/vinyl-particles/context/vinyl-loading-context.tsx
- * @description Home page vinyl intro timeline — scatter assemble, reveal, migrate to mount.
- * @last-updated 2026-05-28
+ * @description Home page vinyl intro timeline — assemble tracks asset-load progress like a bar,
+ *              then reveal and migrate to mount.
+ * @last-updated 2026-07-17
+ * @last-change drive assembleProgress from waitForSiteReady onProgress (not fixed timer)
  * ---end-metadata---
  */
 
@@ -18,12 +20,11 @@ import {
   type ReactNode,
   type RefObject,
 } from "react";
-import { easeOutCubic } from "@/features/vinyl-particles/lib/build-vinyl-particles";
 import {
-  VINYL_LOADING_ASSEMBLE_MS,
   VINYL_LOADING_MIGRATE_MS,
   VINYL_LOADING_REVEAL_MS,
 } from "@/features/vinyl-particles/constants/vinyl-particles";
+import { easeOutCubic } from "@/features/vinyl-particles/lib/build-vinyl-particles";
 import { waitForSiteReady } from "@/shared/lib/site-ready/wait-for-site-ready";
 
 export type VinylLoadingPhase = "assembling" | "revealing" | "migrating" | "complete";
@@ -47,63 +48,34 @@ export function VinylLoadingProvider({
   const [phase, setPhase] = useState<VinylLoadingPhase>("assembling");
   const assembleProgressRef = useRef(0);
   const migrateProgressRef = useRef(0);
-  const siteReadyRef = useRef(false);
 
   useEffect(() => {
     const controller = new AbortController();
     const root = document.getElementById("site-ready-root");
+    let revealTimer = 0;
 
     void waitForSiteReady({
       assetUrls,
       root,
       signal: controller.signal,
+      onProgress: (progress) => {
+        // Linear load progress = vinyl gather amount (progress-bar mapping).
+        assembleProgressRef.current = progress;
+      },
     }).then(() => {
-      siteReadyRef.current = true;
+      if (controller.signal.aborted) return;
+      assembleProgressRef.current = 1;
+      // Brief beat at full disc before overlay fades.
+      revealTimer = window.setTimeout(() => {
+        if (!controller.signal.aborted) setPhase("revealing");
+      }, 120);
     });
 
-    return () => controller.abort();
-  }, [assetUrls]);
-
-  useEffect(() => {
-    let raf = 0;
-    let cancelled = false;
-    const start = performance.now();
-
-    const tryBeginReveal = () => {
-      if (cancelled || !siteReadyRef.current) return false;
-      window.setTimeout(() => {
-        if (!cancelled) setPhase("revealing");
-      }, 120);
-      return true;
-    };
-
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / VINYL_LOADING_ASSEMBLE_MS);
-      assembleProgressRef.current = easeOutCubic(t);
-
-      if (t < 1) {
-        raf = requestAnimationFrame(tick);
-        return;
-      }
-
-      assembleProgressRef.current = 1;
-      if (tryBeginReveal()) return;
-
-      const waitForReady = () => {
-        if (cancelled) return;
-        if (tryBeginReveal()) return;
-        raf = requestAnimationFrame(waitForReady);
-      };
-
-      raf = requestAnimationFrame(waitForReady);
-    };
-
-    raf = requestAnimationFrame(tick);
     return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf);
+      controller.abort();
+      window.clearTimeout(revealTimer);
     };
-  }, []);
+  }, [assetUrls]);
 
   useEffect(() => {
     if (phase !== "revealing") return;
