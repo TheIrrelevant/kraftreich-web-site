@@ -3,7 +3,8 @@
  * @file src/app/layout.tsx
  * @description Root layout. Loads global stylesheet and font variables. No chrome — nav and
  *              footer were both removed; the IdentityStrip carries identity + wayfinding inline.
- * @last-updated 2026-05-24
+ * @last-updated 2026-07-17
+ * @last-change add favicon + apple-touch icon from logo-light
  * ---end-metadata---
  */
 
@@ -14,6 +15,10 @@ import { avenir, warbler } from "@/shared/lib/fonts";
 export const metadata: Metadata = {
   title: "Kraftreich",
   description: "Kraftreich portfolio web site",
+  icons: {
+    icon: [{ url: "/favicon.png", type: "image/png" }],
+    apple: [{ url: "/apple-icon.png", type: "image/png" }],
+  },
 };
 
 export const viewport: Viewport = {
